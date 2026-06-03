@@ -2096,21 +2096,21 @@
         },
         {
             "name": "mitul456/laravel-repository-service",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mitul456/laravel-repository-service.git",
-                "reference": "c04aa427bb43f32799b6f9694936e1915ea6da66"
+                "reference": "135739326e196aca768084b58ec0deb31059d3ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mitul456/laravel-repository-service/zipball/c04aa427bb43f32799b6f9694936e1915ea6da66",
-                "reference": "c04aa427bb43f32799b6f9694936e1915ea6da66",
+                "url": "https://api.github.com/repos/mitul456/laravel-repository-service/zipball/135739326e196aca768084b58ec0deb31059d3ad",
+                "reference": "135739326e196aca768084b58ec0deb31059d3ad",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "^10.0|^11.0|^12.0",
-                "illuminate/support": "^10.0|^11.0|^12.0",
+                "illuminate/console": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
                 "php": "^8.2"
             },
             "type": "library",
@@ -2146,9 +2146,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mitul456/laravel-repository-service/issues",
-                "source": "https://github.com/mitul456/laravel-repository-service/tree/v1.0.6"
+                "source": "https://github.com/mitul456/laravel-repository-service/tree/v1.0.8"
             },
-            "time": "2026-04-04T14:20:43+00:00"
+            "time": "2026-05-24T14:26:21+00:00"
         },
         {
             "name": "monolog/monolog",
