@@ -15,6 +15,7 @@ class Transaction extends Model
         'note',
         'transaction_date'
     ];
+    
 
     public function user()
     {
