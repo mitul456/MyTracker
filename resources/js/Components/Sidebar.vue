@@ -39,7 +39,7 @@ const logout = () => {
             </Link>
 
             <p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-3 pt-4 mb-2">Management</p>
-            <a href="#"
+            <a href="/transactions"
                 class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900/60 text-sm transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

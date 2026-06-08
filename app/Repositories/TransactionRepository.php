@@ -9,20 +9,20 @@ class TransactionRepository implements TransactionRepositoryInterface
 {
     public function all()
     {
-        $transactions = Transaction::where('user_id', auth()->user()->id)->all()->with('account')->with('category')->get();
+        $transactions = Transaction::where('user_id', auth()->user()->id)->with('account')->with('category')->get();
         return $transactions;
     }
 
     public function find($id)
     {
-        $transaction = Transaction::where('user_id', auth()->user()->id)->with('account')->with('category')->find($id);
+        $transaction = Transaction::where('user_id', auth()->user()->id)->with(['account', 'category'])->find($id);
         return $transaction;
     }
 
     public function create(array $data)
     {
-        $transaction = Transaction::where('user_id', auth()->user()->id)->create($data);
-        return $transaction;
+
+        return Transaction::create($data);
     }
 
     public function update($id, array $data)
