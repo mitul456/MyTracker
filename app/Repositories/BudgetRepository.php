@@ -8,10 +8,10 @@ use App\Repositories\Contracts\BudgetRepositoryInterface;
 class BudgetRepository implements BudgetRepositoryInterface
 {
     public function all(){
-        return Budget::where('user_id', auth()->id())->latest()->get();
+        return Budget::where('user_id', auth()->id())->with('category')->latest()->get();
     }
     public function find($id){
-        return Budget::where('user_id', auth()->id())->findOrFail($id);
+        return Budget::where('user_id', auth()->id())->with('category')->findOrFail($id);
     }
     public function create(array $data){
         return Budget::create($data);
