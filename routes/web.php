@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
@@ -30,4 +31,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('/categories', CategoryController::class);
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/transfers', TransferController::class);
+    Route::resource('/budgets', BudgetController::class);
 });

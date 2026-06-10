@@ -26,6 +26,7 @@ class BudgetService
 
     public function create(array $data)
     {
+        $data['user_id'] = auth()->id();
         return $this->repository->create($data);
     }
 
