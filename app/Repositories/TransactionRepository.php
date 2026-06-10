@@ -9,13 +9,13 @@ class TransactionRepository implements TransactionRepositoryInterface
 {
     public function all()
     {
-        $transactions = Transaction::where('user_id', auth()->user()->id)->with('account')->with('category')->get();
+        $transactions = Transaction::where('user_id', auth()->id())->with(['account', 'category'])->latest()->paginate(5);
         return $transactions;
     }
 
     public function find($id)
     {
-        $transaction = Transaction::where('user_id', auth()->user()->id)->with(['account', 'category'])->findOrFail($id);
+        $transaction = Transaction::where('user_id', auth()->id())->with(['account', 'category'])->findOrFail($id);
         return $transaction;
     }
 
@@ -54,3 +54,4 @@ class TransactionRepository implements TransactionRepositoryInterface
         return auth()->user()->categories()->get();
     }
 }
+

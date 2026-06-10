@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Account;
 use App\Repositories\Contracts\TransferRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
@@ -29,25 +30,23 @@ class TransferService
         $userId = auth()->id();
         return DB::transaction(function () use ($userId, $data) {
 
-            $fromAccount = $this->repository
-                ->find($data['from_account_id']);
+            $fromAccount = Account::findOrFail($data['from_account_id']);
+            $toAccount = Account::findOrFail($data['to_account_id']);
 
-            $toAccount = $this->repository
-                ->find($data['to_account_id']);
+            if ($data['from_account_id'] == $data['to_account_id']) {
+                throw new \Exception('Source and destination accounts cannot be the same');
+            }
+
+            if ($data['amount'] <= 0) {
+                throw new \Exception('Invalid amount');
+            }
 
             if ($fromAccount->balance < $data['amount']) {
                 throw new \Exception('Insufficient balance');
             }
 
-            $this->repository->decreaseBalance(
-                $fromAccount,
-                $data['amount']
-            );
-
-            $this->repository->increaseBalance(
-                $toAccount,
-                $data['amount']
-            );
+            $fromAccount->decrement('balance', $data['amount']);
+            $toAccount->increment('balance', $data['amount']);
 
             return $this->repository->create([
                 'user_id' => $userId,
@@ -61,11 +60,56 @@ class TransferService
 
     public function update($id, array $data)
     {
-        return $this->repository->update($id, $data);
+        return DB::transaction(function () use ($id, $data) {
+
+            $transfer = $this->repository->find($id);
+
+            $oldFrom = Account::findOrFail($transfer->from_account_id);
+            $oldTo = Account::findOrFail($transfer->to_account_id);
+
+            // Rollback old transfer
+            $oldFrom->increment('balance', $transfer->amount);
+            $oldTo->decrement('balance', $transfer->amount);
+
+            $newFrom = Account::findOrFail($data['from_account_id']);
+            $newTo = Account::findOrFail($data['to_account_id']);
+
+            if ($newFrom->balance < $data['amount']) {
+                throw new \Exception('Insufficient balance');
+            }
+
+            // Apply new transfer
+            $newFrom->decrement('balance', $data['amount']);
+            $newTo->increment('balance', $data['amount']);
+
+            return $this->repository->update($id, $data);
+        });
     }
 
     public function delete($id)
     {
-        return $this->repository->delete($id);
+        return DB::transaction(function () use ($id) {
+
+            $transfer = Account::findOrFail($id);
+
+            $fromAccount = Account::findOrFail(
+                $transfer->from_account_id
+            );
+
+            $toAccount = Account::findOrFail(
+                $transfer->to_account_id
+            );
+
+            // Reverse transfer
+            $fromAccount->increment('balance', $transfer->amount);
+            $toAccount->decrement('balance', $transfer->amount);
+
+            return $this->repository->delete($id);
+        });
+    }
+
+    public function accounts()
+    {
+        return $this->repository->accounts();
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TransferCreate extends FormRequest
+class BudgetCreate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,11 @@ class TransferCreate extends FormRequest
      */
     public function rules(): array
     {
-        return [            
-            'from_account_id' => ['required', 'integer', 'exists:accounts,id'],
-            'to_account_id' => ['required', 'integer', 'exists:accounts,id'],
-            'amount' => ['required', 'numeric', 'min:0.01'],
-            'transfer_date' => ['required', 'date'],            
+        return [
+            'category_id' => 'required|exists:categories,id',
+            'amount' => 'required|numeric|min:0',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ];
     }
 }

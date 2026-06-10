@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Account;
 use App\Repositories\Contracts\TransactionRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class TransactionService
 {
@@ -25,8 +27,21 @@ class TransactionService
 
     public function create(array $data)
     {
-        $data['user_id'] = auth()->id();
-        return $this->repository->create($data);
+        DB::transaction(function () use ($data) {
+
+            $data['user_id'] = auth()->id();
+
+            $account = Account::findOrFail($data['account_id']);
+
+            if ($data['type'] == 'expense') {
+                $account->decrement('balance', $data['amount']);
+            } else {
+                $account->increment('balance', $data['amount']);
+            }
+
+
+            return $this->repository->create($data);
+        });
     }
 
     public function update($id, array $data)
@@ -36,7 +51,20 @@ class TransactionService
 
     public function delete($id)
     {
-        return $this->repository->delete($id);
+        return DB::transaction(function () use ($id) {
+
+            $transaction = $this->repository->find($id);
+
+            $account = Account::findOrFail($transaction->account_id);
+
+            if ($transaction->type == 'expense') {
+                $account->increment('balance', $transaction->amount);
+            } else {
+                $account->decrement('balance', $transaction->amount);
+            }
+
+            return $this->repository->delete($id);
+        });
     }
 
     public function getAccounts()

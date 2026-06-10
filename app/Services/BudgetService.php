@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
-use App\Repositories\Contracts\AccountRepositoryInterface;
+use App\Models\Category;
+use App\Repositories\Contracts\BudgetRepositoryInterface;
 
-class AccountService
+class BudgetService
 {
-    protected AccountRepositoryInterface $repository;
+    protected BudgetRepositoryInterface $repository;
 
-    public function __construct(AccountRepositoryInterface $repository)
+    public function __construct(BudgetRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -25,6 +26,7 @@ class AccountService
 
     public function create(array $data)
     {
+        $data['user_id'] = auth()->id();
         return $this->repository->create($data);
     }
 
@@ -38,8 +40,9 @@ class AccountService
         return $this->repository->delete($id);
     }
 
-    public function totalNetWorth()
+    public function category()
     {
-        return $this->repository->totalNetWorth();
+        $category = Category::where('user_id', auth()->user()->id)->latest()->get();
+        return $category;
     }
 }

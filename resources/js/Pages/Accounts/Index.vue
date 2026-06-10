@@ -3,8 +3,9 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 
 // Accept core dynamic schema inputs sent from Laravel backend controller
-defineProps({
-    accounts: Array,
+const props = defineProps({
+    accounts: Object,
+    totalNetWorth: Number,
 });
 
 const form = useForm({});
@@ -55,7 +56,7 @@ const formatBalance = (value) => {
                 <div class="relative bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-2xl p-6">
                     <div class="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent"></div>
                     <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Net Worth</p>
-                    <h3 class="text-3xl font-bold text-white mt-2">\$58,350.00</h3>
+                    <h3 class="text-3xl font-bold text-white mt-2">${{ formatBalance(totalNetWorth) }}</h3>
                     <p class="text-xs text-slate-500 mt-1">Combined assets from all accounts</p>
                 </div>
             </div>
@@ -63,7 +64,7 @@ const formatBalance = (value) => {
             <!-- Accounts Grid List -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Loop over Accounts schema dynamic data -->
-                <div v-for="account in accounts" :key="account.id" 
+                <div v-for="account in accounts.data" :key="account.id" 
                     class="group relative bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-6 transition-all duration-300 hover:border-slate-700/80 hover:bg-slate-900/60">
                     
                     <!-- Top subtle visual light bar line on card hover -->
@@ -126,10 +127,25 @@ const formatBalance = (value) => {
                 </div>
 
                 <!-- Empty State UI (If no active accounts found) -->
-                <div v-if="accounts.length === 0" class="col-span-full bg-slate-900/20 border border-dashed border-slate-800 rounded-2xl p-12 text-center">
+                <div v-if="accounts.data.length === 0" class="col-span-full bg-slate-900/20 border border-dashed border-slate-800 rounded-2xl p-12 text-center">
                     <p class="text-slate-400 text-sm">No accounts found. Create your first asset wallet above.</p>
                 </div>
             </div>
+
+            <div v-if="accounts.links.length > 3" class="flex justify-center mt-6 gap-2">
+                        <template v-for="(link, index) in accounts.links" :key="index">
+
+                            <span v-if="!link.url" v-html="link.label"
+                                class="px-3 py-2 rounded-lg text-sm border border-slate-700 opacity-50 cursor-not-allowed" />
+
+                            <Link v-else :href="link.url" v-html="link.label"
+                                class="px-3 py-2 rounded-lg text-sm border border-slate-700" :class="{
+                                    'bg-cyan-500 text-black': link.active,
+                                    'text-slate-300 hover:bg-slate-800': !link.active
+                                }" />
+
+                        </template>
+                    </div>
         </div>
     </AppLayout>
 </template>

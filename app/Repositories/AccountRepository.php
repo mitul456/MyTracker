@@ -9,7 +9,7 @@ class AccountRepository implements AccountRepositoryInterface
 {
     public function all()
     {
-        return Account::where('user_id', auth()->id())->get();
+        return Account::where('user_id', auth()->id())->latest()->paginate(6);
     }
 
     public function find($id)
@@ -45,5 +45,12 @@ class AccountRepository implements AccountRepositoryInterface
     public function decreaseBalance(Account $account, float $amount)
     {
         $account->decrement('balance', $amount);
+    }
+
+    public function totalNetWorth()
+    {
+        $accounts = Account::where('user_id', auth()->id())->get();
+        $totalNetWorth = $accounts->sum('balance');
+        return $totalNetWorth;
     }
 }
