@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransferController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -28,4 +29,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('/accounts', AccountController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/transactions', TransactionController::class);
+    Route::resource('/transfers', TransferController::class);
 });

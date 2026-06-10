@@ -26,7 +26,8 @@ class TransferController extends Controller
      */
     public function create()
     {
-        $accounts = $this->transferRepo->getAccounts();
+        
+        $accounts = $this->transferRepo->accounts();
         return Inertia::render('Transfers/Create', ['accounts' => $accounts]);
     }
 
@@ -36,6 +37,7 @@ class TransferController extends Controller
     public function store(TransferCreate $request)
     {
         $data = $request->validated();
+        
         $this->transferRepo->create($data);
         return redirect()->route('transfers.index');
     }
@@ -55,7 +57,8 @@ class TransferController extends Controller
     public function edit($id)
     {
         $transfer = $this->transferRepo->find($id);
-        return Inertia::render('Transfers/Edit', ['transfer' => $transfer]);
+        // $accounts = $this->transferRepo->accounts();
+        return Inertia::render('Transfers/Edit', ['transfer' => $transfer, 'accounts' => $this->transferRepo->accounts()]);
     }
 
     /**

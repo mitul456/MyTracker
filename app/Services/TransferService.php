@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Account;
 use App\Repositories\Contracts\TransferRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
@@ -29,11 +30,8 @@ class TransferService
         $userId = auth()->id();
         return DB::transaction(function () use ($userId, $data) {
 
-            $fromAccount = $this->repository
-                ->find($data['from_account_id']);
-
-            $toAccount = $this->repository
-                ->find($data['to_account_id']);
+            $fromAccount = Account::findOrFail($data['from_account_id']);
+            $toAccount = Account::findOrFail($data['to_account_id']);
 
             if ($data['from_account_id'] == $data['to_account_id']) {
                 throw new \Exception('Source and destination accounts cannot be the same');
@@ -108,5 +106,10 @@ class TransferService
 
             return $this->repository->delete($id);
         });
+    }
+
+    public function accounts()
+    {
+        return $this->repository->accounts();
     }
 }
