@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Repositories\AccountRepository;
 use App\Repositories\AuthRepository;
+use App\Repositories\BudgetRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\AuthRepositoryInterface;
+use App\Repositories\Contracts\BudgetRepositoryInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\TransactionRepositoryInterface;
 use App\Repositories\Contracts\TransferRepositoryInterface;
@@ -41,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             TransferRepositoryInterface::class,
             TransferRepository::class
+        );
+        $this->app->bind(
+            BudgetRepositoryInterface::class,
+            BudgetRepository::class
         );
     }
 
