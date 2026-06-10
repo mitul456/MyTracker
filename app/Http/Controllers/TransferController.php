@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transfer;
+use App\Services\TransferService;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TransferController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $transferRepo;
+    public function __construct(TransferService $transferRepo)
+    {
+        $this->transferRepo = $transferRepo;
+    }
     public function index()
     {
-        //
+        $transfers = $this->transferRepo->getAll();
+        return Inertia::render('Transfers/Index', ['transfers' => $transfers]);
     }
 
     /**
@@ -20,7 +25,7 @@ class TransferController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Transfers/Create');
     }
 
     /**
