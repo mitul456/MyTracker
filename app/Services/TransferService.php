@@ -64,15 +64,15 @@ class TransferService
 
             $transfer = $this->repository->find($id);
 
-            $oldFrom = $this->repository->find($transfer->from_account_id);
-            $oldTo = $this->repository->find($transfer->to_account_id);
+            $oldFrom = Account::findOrFail($transfer->from_account_id);
+            $oldTo = Account::findOrFail($transfer->to_account_id);
 
             // Rollback old transfer
             $oldFrom->increment('balance', $transfer->amount);
             $oldTo->decrement('balance', $transfer->amount);
 
-            $newFrom = $this->repository->find($data['from_account_id']);
-            $newTo = $this->repository->find($data['to_account_id']);
+            $newFrom = Account::findOrFail($data['from_account_id']);
+            $newTo = Account::findOrFail($data['to_account_id']);
 
             if ($newFrom->balance < $data['amount']) {
                 throw new \Exception('Insufficient balance');

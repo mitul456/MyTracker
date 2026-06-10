@@ -37,4 +37,9 @@ class AccountService
     {
         return $this->repository->delete($id);
     }
+
+    public function totalNetWorth()
+    {
+        return $this->repository->totalNetWorth();
+    }
 }
