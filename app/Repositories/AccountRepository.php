@@ -46,4 +46,11 @@ class AccountRepository implements AccountRepositoryInterface
     {
         $account->decrement('balance', $amount);
     }
+
+    public function totalNetWorth()
+    {
+        $accounts = Account::where('user_id', auth()->id())->get();
+        $totalNetWorth = $accounts->sum('balance');
+        return $totalNetWorth;
+    }
 }

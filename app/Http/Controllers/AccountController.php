@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AccountCreate;
 use App\Models\Account;
 use App\Services\AccountService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AccountController extends Controller
@@ -18,7 +17,11 @@ class AccountController extends Controller
     public function index()
     {
         $accounts = $this->accountService->getAll();
-        return Inertia::render('Accounts/Index', ['accounts' => $accounts]);
+        $totalNetWorth = $this->accountService->totalNetWorth();
+        return Inertia::render('Accounts/Index', [
+            'accounts' => $accounts,
+            'totalNetWorth' => $totalNetWorth
+        ]);
     }
 
     /**
