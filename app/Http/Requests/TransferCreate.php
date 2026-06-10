@@ -23,10 +23,12 @@ class TransferCreate extends FormRequest
     public function rules(): array
     {
         return [
+            
             'from_account_id' => ['required', 'integer', 'exists:accounts,id'],
             'to_account_id' => ['required', 'integer', 'exists:accounts,id'],
             'amount' => ['required', 'numeric', 'min:0.01'],
-            'description' => ['nullable', 'string', 'max:255'],
+            'transfer_date' => ['required', 'date'],
+            
         ];
     }
 }
