@@ -6,6 +6,7 @@ use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use App\Services\TransactionService;
 use Inertia\Inertia;
+use PhpParser\Node\Stmt\TryCatch;
 
 class TransactionController extends Controller
 {
@@ -46,16 +47,19 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Transaction $transaction)
+    public function show($id)
     {
+        $transaction = $this->transaction->find($id);
         return Inertia::render('Transactions/Show', ['transaction' => $transaction]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transaction $transaction)
+    public function edit($id)
     {
+        $transaction = $this->transaction->find($id);
+
         return Inertia::render('Transactions/Edit', [
             'transaction' => $transaction,
             'accounts' => $this->transaction->getAccounts(),
@@ -66,19 +70,19 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TransactionRequest $request, Transaction $transaction)
+    public function update(TransactionRequest $request, $id)
     {
         $data = $request->validated();
-        $this->transaction->update($transaction->id, $data);
+        $this->transaction->update($id, $data);
         return redirect()->route('transactions.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transaction $transaction)
+    public function destroy($id)
     {
-        $this->transaction->delete($transaction->id);
+        $this->transaction->delete($id);
         return redirect()->route('transactions.index');
     }
 }

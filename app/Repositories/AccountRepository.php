@@ -35,4 +35,15 @@ class AccountRepository implements AccountRepositoryInterface
         $account = $this->find($id);
         $account->delete();
     }
+
+
+    public function increaseBalance(Account $account, float $amount)
+    {
+        $account->increment('balance', $amount);
+    }
+
+    public function decreaseBalance(Account $account, float $amount)
+    {
+        $account->decrement('balance', $amount);
+    }
 }

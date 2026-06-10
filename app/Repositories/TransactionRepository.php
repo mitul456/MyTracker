@@ -15,13 +15,12 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     public function find($id)
     {
-        $transaction = Transaction::where('user_id', auth()->user()->id)->with(['account', 'category'])->find($id);
+        $transaction = Transaction::where('user_id', auth()->user()->id)->with(['account', 'category'])->findOrFail($id);
         return $transaction;
     }
 
     public function create(array $data)
     {
-
         return Transaction::create($data);
     }
 

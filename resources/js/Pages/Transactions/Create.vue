@@ -225,7 +225,7 @@ const submit = () => {
                         <input
                             v-model="form.transaction_date"
                             type="date"
-                            class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-cyan-500 focus:outline-none"
+                            class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-cyan-500 focus:outline-none" style="color-scheme: dark"
                         >
 
                         <p

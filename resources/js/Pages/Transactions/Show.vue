@@ -82,7 +82,7 @@ const formatDate = (date) => {
                         + ${{ formatAmount(transaction.amount) }}
 
                     </h2>
-
+  
                     <h2
                         v-else
                         class="mt-2 text-4xl font-black tracking-tight text-rose-400">
