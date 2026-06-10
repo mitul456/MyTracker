@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BudgetCreate;
 use App\Services\BudgetService;
+use Inertia\Inertia;
 
 class BudgetController extends Controller
 {
@@ -15,7 +16,7 @@ class BudgetController extends Controller
     public function index()
     {
         $budgets = $this->budgetService->getAll();
-        return Inertia('Budgets/Index', ['budgets' => $budgets]);
+        return Inertia::render('Budgets/Index', ['budgets' => $budgets]);
     }
 
     /**
@@ -24,7 +25,7 @@ class BudgetController extends Controller
     public function create()
     {
         $categories = $this->budgetService->category();
-        return Inertia('Budgets/Create', ['categories' => $categories]);
+        return Inertia::render('Budgets/Create', ['categories' => $categories]);
     }
 
     /**
@@ -33,7 +34,7 @@ class BudgetController extends Controller
     public function store(BudgetCreate $request)
     {
         $budget = $this->budgetService->create($request->all());
-        return redirect()->route('budgets.show', $budget->id);
+        return redirect()->route('budgets.index', $budget->id);
     }
 
     /**
@@ -42,7 +43,7 @@ class BudgetController extends Controller
     public function show($id)
     {
         $budget = $this->budgetService->find($id);
-        return Inertia('Budgets/Show', ['budget' => $budget]);
+        return Inertia::render('Budgets/Show', ['budget' => $budget]);
     }
 
     /**
@@ -52,7 +53,7 @@ class BudgetController extends Controller
     {
         $budget = $this->budgetService->find($id);
         $categories = $this->budgetService->category();
-        return Inertia('Budgets/Edit', ['budget' => $budget, 'categories' => $categories]);
+        return Inertia::render('Budgets/Edit', ['budget' => $budget, 'categories' => $categories]);
     }
 
     /**
@@ -62,7 +63,7 @@ class BudgetController extends Controller
     {
         $budget = $this->budgetService->find($id);
         $this->budgetService->update($id, $request->all());
-        return redirect()->route('budgets.show', $budget->id);
+        return redirect()->route('budgets.index', $budget->id);
     }
 
     /**
