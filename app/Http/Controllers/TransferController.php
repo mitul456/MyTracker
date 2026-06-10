@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransferCreate;
 use App\Models\Transfer;
 use App\Services\TransferService;
 use Illuminate\Http\Request;
@@ -25,46 +26,54 @@ class TransferController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Transfers/Create');
+        $accounts = $this->transferRepo->getAccounts();
+        return Inertia::render('Transfers/Create', ['accounts' => $accounts]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TransferCreate $request)
     {
-        //
+        $data = $request->validated();
+        $this->transferRepo->create($data);
+        return redirect()->route('transfers.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Transfer $transfer)
+    public function show($id)
     {
-        //
+        $transfer = $this->transferRepo->find($id);
+        return Inertia::render('Transfers/Show', ['transfer' => $transfer]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transfer $transfer)
+    public function edit($id)
     {
-        //
+        $transfer = $this->transferRepo->find($id);
+        return Inertia::render('Transfers/Edit', ['transfer' => $transfer]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Transfer $transfer)
+    public function update(TransferCreate $request, $id)
     {
-        //
+        $data = $request->validated();
+        $this->transferRepo->update($id, $data);
+        return redirect()->route('transfers.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transfer $transfer)
+    public function destroy($id)
     {
-        //
+        $this->transferRepo->delete($id);
+        return redirect()->route('transfers.index');
     }
 }
