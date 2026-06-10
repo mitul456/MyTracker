@@ -92,11 +92,11 @@ class TransferService
 
             $transfer = $this->repository->find($id);
 
-            $fromAccount = $this->repository->find(
+            $fromAccount = Account::findOrFail(
                 $transfer->from_account_id
             );
 
-            $toAccount = $this->repository->find(
+            $toAccount = Account::findOrFail(
                 $transfer->to_account_id
             );
 
