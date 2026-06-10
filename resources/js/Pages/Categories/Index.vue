@@ -1,12 +1,13 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { computed, ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, Link } from '@inertiajs/vue3';
+
 
 const props = defineProps({
     categories: {
-        type: Array,
-        default: () => []
+        type: Object,
+        
 
     },
     category: {
@@ -14,6 +15,8 @@ const props = defineProps({
         default: () => ({})
     }
 });
+
+console.log(props.categories.links);
 
 const showViewModal = ref(false);
 const showCreateModal = ref(false);
@@ -55,11 +58,11 @@ const deleteCategory = () => {
 };
 
 const incomeCount = computed(() => {
-    return props.categories.filter(item => item.type === 'income').length;
+    return props.categories.data.filter(item => item.type === 'income').length;
 });
 
 const expenseCount = computed(() => {
-    return props.categories.filter(item => item.type === 'expense').length;
+    return props.categories.data.filter(item => item.type === 'expense').length;
 });
 
 const openViewModal = (category) => {
@@ -142,7 +145,7 @@ const closeModal = () => {
                     </p>
 
                     <h3 class="text-3xl font-bold text-white mt-2">
-                        {{ categories.length }}
+                        {{ categories.total }}
                     </h3>
 
                     <p class="text-xs text-slate-500 mt-1">
@@ -192,7 +195,7 @@ const closeModal = () => {
             <!-- Category Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <div v-for="category in categories" :key="category.id"
+                <div v-for="category in categories.data" :key="category.id"
                     class="group relative bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-6 transition-all duration-300 hover:border-slate-700/80 hover:bg-slate-900/60">
 
                     <!-- Hover Top Line -->
@@ -294,7 +297,7 @@ const closeModal = () => {
                 </div>
 
                 <!-- Empty -->
-                <div v-if="categories.length === 0"
+                <div v-if="categories.data.length === 0"
                     class="col-span-full bg-slate-900/20 border border-dashed border-slate-800 rounded-2xl p-12 text-center">
 
                     <p class="text-slate-400 text-sm">
@@ -302,6 +305,21 @@ const closeModal = () => {
                     </p>
                 </div>
             </div>
+
+            <div v-if="categories.links.length > 3" class="flex justify-center mt-6 gap-2">
+                        <template v-for="(link, index) in categories.links" :key="index">
+
+                            <span v-if="!link.url" v-html="link.label"
+                                class="px-3 py-2 rounded-lg text-sm border border-slate-700 opacity-50 cursor-not-allowed" />
+
+                            <Link v-else :href="link.url" v-html="link.label"
+                                class="px-3 py-2 rounded-lg text-sm border border-slate-700" :class="{
+                                    'bg-cyan-500 text-black': link.active,
+                                    'text-slate-300 hover:bg-slate-800': !link.active
+                                }" />
+
+                        </template>
+                    </div>
         </div>
 
 
