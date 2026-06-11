@@ -34,8 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/transfers', TransferController::class);
     Route::resource('/budgets', BudgetController::class);
-    Route::resource('/recurring-transactions',RecurringTransactionController::class);
+    Route::resource('/recurring-transactions',RecurringTransactionController::class);    
     Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
+    
     Route::get('/reports/export-csv', [ReportController::class, 'exportCsv'])
     ->name('reports.export.csv');
     Route::get('/reports/export-excel', [ReportController::class, 'exportExcel'])
