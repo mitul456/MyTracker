@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RecurringTransactionController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransferController;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/transfers', TransferController::class);
     Route::resource('/budgets', BudgetController::class);
+    Route::resource('/recurring-transactions',RecurringTransactionController::class);
+    Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
+    Route::get('/reports/export-csv', [ReportController::class, 'exportCsv'])
+    ->name('reports.export.csv');
+    Route::get('/reports/export-excel', [ReportController::class, 'exportExcel'])
+    ->name('reports.export.excel');
+    Route::get('/reports/print', [ReportController::class, 'print'])
+    ->name('reports.print');
 });
+   
