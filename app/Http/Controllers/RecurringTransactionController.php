@@ -19,8 +19,10 @@ class RecurringTransactionController extends Controller
     public function index()
     {
         $recurringTransactions = $this->recurringTrxService->getAll();
+        
         return Inertia::render('RecurringTransactions/Index', [
-            'recurringTransactions' => $recurringTransactions
+            'recurringTransactions' => $recurringTransactions,
+            
         ]);
     }
 
@@ -44,6 +46,7 @@ class RecurringTransactionController extends Controller
     {
         $data = $request->validated();
         $this->recurringTrxService->create($data);
+
         return redirect()->route('recurring-transactions.index')->with('success', 'Recurring Transaction created successfully.');
     }
 
@@ -53,8 +56,11 @@ class RecurringTransactionController extends Controller
     public function show($id)
     {
         $recurringTransaction = $this->recurringTrxService->find($id);
+        
+
         return Inertia::render('RecurringTransactions/Show', [
-            'recurringTransaction' => $recurringTransaction
+            'recurringTransaction' => $recurringTransaction,
+            
         ]);
     }
 
@@ -64,17 +70,22 @@ class RecurringTransactionController extends Controller
     public function edit($id)
     {
         $recurringTransaction = $this->recurringTrxService->find($id);
+        $accounts = $this->recurringTrxService->accounts();
+        $categories = $this->recurringTrxService->categories();
         return Inertia::render('RecurringTransactions/Edit', [
-            'recurringTransaction' => $recurringTransaction
+            'recurringTransaction' => $recurringTransaction,
+            'accounts' => $accounts,
+            'categories' => $categories
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(RecurringTR $request, $id)
     {
         $data = $request->validated();
+        
         $this->recurringTrxService->update($id, $data);
         return redirect()->route('recurring-transactions.index')->with('success', 'Recurring Transaction updated successfully.');
     }
