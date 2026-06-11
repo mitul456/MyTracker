@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BudgetCreate;
+use App\Models\Transaction;
 use App\Services\BudgetService;
 use Inertia\Inertia;
 
@@ -43,7 +44,8 @@ class BudgetController extends Controller
     public function show($id)
     {
         $budget = $this->budgetService->find($id);
-        return Inertia::render('Budgets/Show', ['budget' => $budget]);
+        $spentAmount = $this->budgetService->spentAmount($budget);
+        return Inertia::render('Budgets/Show', ['budget' => $budget, 'spentAmount' => $spentAmount]);
     }
 
     /**

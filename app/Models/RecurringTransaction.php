@@ -16,6 +16,10 @@ class RecurringTransaction extends Model
         'next_run_date'
     ];
 
+    protected $casts = [
+        'next_run_date' => 'date',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
