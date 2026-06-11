@@ -10,5 +10,5 @@ Artisan::command('inspire', function () {
 
 
 Schedule::command(
-    'recurring:process'
+    'app:process'
 )->daily();
