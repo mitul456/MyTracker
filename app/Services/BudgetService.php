@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Category;
+use App\Models\Transaction;
 use App\Repositories\Contracts\BudgetRepositoryInterface;
 
 class BudgetService
@@ -44,5 +45,16 @@ class BudgetService
     {
         $category = Category::where('user_id', auth()->user()->id)->latest()->get();
         return $category;
+    }
+
+    public function spentAmount($budget)
+    {
+        $spentAmount = Transaction::where('category_id', $budget->category_id)->where('type', 'expense')
+            ->whereBetween('transaction_date', [
+                $budget->start_date,
+                $budget->end_date
+            ])
+            ->sum('amount');
+        return $spentAmount;
     }
 }

@@ -10,8 +10,10 @@ use App\Repositories\Contracts\AccountRepositoryInterface;
 use App\Repositories\Contracts\AuthRepositoryInterface;
 use App\Repositories\Contracts\BudgetRepositoryInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
+use App\Repositories\Contracts\RecurringTransactionRepositoryInterface;
 use App\Repositories\Contracts\TransactionRepositoryInterface;
 use App\Repositories\Contracts\TransferRepositoryInterface;
+use App\Repositories\RecurringTransactionRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\TransferRepository;
 use Illuminate\Support\ServiceProvider;
@@ -47,6 +49,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             BudgetRepositoryInterface::class,
             BudgetRepository::class
+        );
+        $this->app->bind(
+            RecurringTransactionRepositoryInterface::class,
+            RecurringTransactionRepository::class
         );
     }
 
