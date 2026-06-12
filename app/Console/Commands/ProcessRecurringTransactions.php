@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Account;
 use App\Models\RecurringTransaction;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -45,6 +46,14 @@ class ProcessRecurringTransactions extends Command
                 'note' => 'Recurring Transaction',
                 'transaction_date' => today()
             ]);
+
+            $account = Account::where('user_id', $recurring->user_id)->first();
+
+            if($recurring->type == 'expense') {
+                    $account->decrement('balance', $recurring->amount);
+            } else {
+                $account->increment('balance', $recurring->amount);
+            }
 
             // Update next_run_date based on frequency
             $nextDate = Carbon::parse(

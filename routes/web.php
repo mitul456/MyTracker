@@ -27,7 +27,10 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    
 
     Route::resource('/accounts', AccountController::class);
     Route::resource('/categories', CategoryController::class);

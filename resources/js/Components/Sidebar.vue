@@ -1,11 +1,16 @@
 <script setup>
+import { ref } from 'vue'
 import { router, Link } from '@inertiajs/vue3'
+
+
 defineProps({ isOpen: Boolean });
 defineEmits(['close']);
 
+const settingsOpen = ref(false)
 const logout = () => {
     router.post('/logout')
 }
+
 
 
 </script>
@@ -27,7 +32,7 @@ const logout = () => {
         </div>
 
         <!-- Navigation Routes Links -->
-        <div class="flex-1 overflow-y-auto px-4 py-6 space-y-1.5">
+        <div class="flex-1 overflow-y-auto px-4 py-6 space-y-1.5 scrollbar-thin scrollbar-thumb-slate-700/80 scrollbar-track-slate-950">
             <p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-3 mb-2">Core</p>
             <Link href="/dashboard"
                 class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20 text-cyan-400 font-medium text-sm transition-all">
@@ -95,26 +100,45 @@ const logout = () => {
                 </svg>
                 Reports
             </Link>
-            <Link href="#"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900/60 text-sm transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-                Users
-            </Link>
+            <p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-3 pt-4 mb-2">
+                System
+            </p>
 
-            <p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-3 pt-4 mb-2">System</p>
-            <Link href="#"
-                class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900/60 text-sm transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                Settings
-            </Link>
+            <!-- Settings Menu -->
+            <div>
+                <button @click="settingsOpen = !settingsOpen"
+                    class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900/60 text-sm transition-all">
+
+                    <div class="flex items-center gap-3">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+
+                        <span>Settings</span>
+                    </div>
+
+                    <svg :class="settingsOpen ? 'rotate-180' : ''" class="w-4 h-4 transition-transform duration-300"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown -->
+                <div v-show="settingsOpen" class="ml-6 mt-1 space-y-1">
+                    <Link href="/users"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900/60 text-sm transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5V18a4 4 0 00-5.356-3.77M9 20H4V18a4 4 0 015.356-3.77M15 7a3 3 0 11-6 0 3 3 0 016 0zM21 20v-2a4 4 0 00-3-3.87M3 20v-2a4 4 0 013-3.87" />
+                        </svg>
+
+                        Users
+                    </Link>
+                </div>
+            </div>
         </div>
 
         <!-- Logout Area -->
