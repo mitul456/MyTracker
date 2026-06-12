@@ -27,15 +27,19 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    
 
     Route::resource('/accounts', AccountController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/transfers', TransferController::class);
     Route::resource('/budgets', BudgetController::class);
-    Route::resource('/recurring-transactions',RecurringTransactionController::class);
+    Route::resource('/recurring-transactions',RecurringTransactionController::class);    
     Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
+    
     Route::get('/reports/export-csv', [ReportController::class, 'exportCsv'])
     ->name('reports.export.csv');
     Route::get('/reports/export-excel', [ReportController::class, 'exportExcel'])
