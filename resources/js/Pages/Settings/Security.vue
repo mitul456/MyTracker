@@ -57,7 +57,7 @@ const passwordForm = reactive({
                         </label>
 
                         <input
-                            type="password"
+                            type="password" placeholder="Enter your current password"
                             v-model="passwordForm.current_password"
                             class="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-cyan-500">
 
@@ -72,7 +72,7 @@ const passwordForm = reactive({
                             </label>
 
                             <input
-                                type="password"
+                                type="password" placeholder="Enter your new password"
                                 v-model="passwordForm.password"
                                 class="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-cyan-500">
 
@@ -85,7 +85,7 @@ const passwordForm = reactive({
                             </label>
 
                             <input
-                                type="password"
+                                type="password" placeholder="Confirm your new password"
                                 v-model="passwordForm.password_confirmation"
                                 class="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-cyan-500">
 
