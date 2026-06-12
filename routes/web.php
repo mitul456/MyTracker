@@ -9,6 +9,7 @@ use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -47,10 +48,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/print', [ReportController::class, 'print'])
     ->name('reports.print');
 
+<<<<<<< HEAD
     Route::get('/profiles', function () {
         return Inertia::render('Settings/Profile');
     })->name('profiles.profile');
     
+=======
+    Route::get('/profiles', [UserProfileController::class, 'index'])->name('profiles.profile');
+>>>>>>> 8b85254030f891d91ef4edc244fe838cd0d7d63c
     Route::get('/security', function () {
         return Inertia::render('Settings/Security');
     })->name('profiles.Security');
