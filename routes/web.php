@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profiles', function () {
         return Inertia::render('Settings/Profile');
     })->name('profiles.profile');
+    
     Route::get('/security', function () {
         return Inertia::render('Settings/Security');
     })->name('profiles.Security');
