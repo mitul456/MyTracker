@@ -1,19 +1,30 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Link, useForm } from '@inertiajs/vue3';
 
-const user = {
-    name: 'Nizamuddin Quader',
-    email: 'nizam@example.com',
-    phone: '+8801712345678',
-    address: 'Rajshahi, Bangladesh',
-    currency: 'BDT',
-    avatar: null,
+const props = defineProps({
+    user: Object, 
+    profile: Object
+});
+
+const form = useForm({
+    name: props.user.name,
+    email: props.user.email,
+    phone: props.user.phone,
+    address: props.profile.address,
+    currency: props.profile.currency
+});
+
+const submit = () => {
+    form.put(route('profile.update'));
 };
+
 </script>
 
 <template>
     <AppLayout>
 
+    <form @submit.prevent="submit">
         <div class="max-w-6xl mx-auto">
 
             <!-- Header -->
@@ -41,12 +52,12 @@ const user = {
 
                         <!-- Avatar -->
 
-                        <div
+                        <!-- <div
                             class="w-32 h-32 rounded-full bg-slate-800 border-4 border-slate-700 flex items-center justify-center overflow-hidden">
 
                             <img
-                                v-if="user.avatar"
-                                :src="user.avatar"
+                                v-if="profile.avatar"
+                                :src="`/avatar/${profile.avatar}`"
                                 class="w-full h-full object-cover">
 
                             <span
@@ -57,7 +68,7 @@ const user = {
 
                             </span>
 
-                        </div>
+                        </div> -->
 
                         <button
                             class="mt-6 px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold transition">
@@ -136,8 +147,7 @@ const user = {
                                 </label>
 
                                 <input
-                                    type="text"
-                                    :value="user.name"
+                                    type="text" v-model="form.name"
                                     class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
 
                             </div>
@@ -154,8 +164,7 @@ const user = {
                                 </label>
 
                                 <input
-                                    type="email"
-                                    :value="user.email"
+                                    type="email" v-model="form.email"
                                     class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
 
                             </div>
@@ -172,8 +181,7 @@ const user = {
                                 </label>
 
                                 <input
-                                    type="text"
-                                    :value="user.phone"
+                                    type="text" v-model="form.phone"
                                     class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white">
 
                             </div>
@@ -256,8 +264,7 @@ const user = {
                                 </label>
 
                                 <textarea
-                                    type="text"
-                                    :value="user.address"
+                                    type="text" v-model="form.address"
                                     class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white"
                                     rows="3"/>
 
@@ -291,6 +298,7 @@ const user = {
             </div>
 
         </div>
+    </form>
 
     </AppLayout>
 </template>
