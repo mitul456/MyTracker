@@ -7,11 +7,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+
 
 Route::get('/', function () {
     return redirect('/login');
@@ -31,27 +32,27 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
-    
+
 
     Route::resource('/accounts', AccountController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/transfers', TransferController::class);
     Route::resource('/budgets', BudgetController::class);
-    Route::resource('/recurring-transactions',RecurringTransactionController::class);    
-    Route::get('/reports',[ReportController::class,'index'])->name('reports.index');
-    
-    Route::get('/reports/export-csv', [ReportController::class, 'exportCsv'])
-    ->name('reports.export.csv');
-    Route::get('/reports/export-excel', [ReportController::class, 'exportExcel'])
-    ->name('reports.export.excel');
-    Route::get('/reports/print', [ReportController::class, 'print'])
-    ->name('reports.print');
+    Route::resource('/recurring-transactions', RecurringTransactionController::class);
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
-    Route::get('/profiles', [UserProfileController::class, 'index'])->name('profiles.index');
-    Route::put('/profiles/{id}', [UserProfileController::class, 'update'])->name('profiles.update');
-    Route::get('/security', function () {
-        return Inertia::render('Settings/Security');
-    })->name('profiles.Security');
+    Route::get('/reports/export-csv', [ReportController::class, 'exportCsv'])
+        ->name('reports.export.csv');
+    Route::get('/reports/export-excel', [ReportController::class, 'exportExcel'])
+        ->name('reports.export.excel');
+    Route::get('/reports/print', [ReportController::class, 'print'])
+        ->name('reports.print');
+
+    Route::get('/profiles', [UserProfileController::class, 'index'])
+        ->name('profiles.profile');
+    Route::put('/profiles/update', [UserProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::get('/security', [SecurityController::class, 'index'])->name('security.index');
 });
-   

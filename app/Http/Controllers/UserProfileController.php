@@ -2,94 +2,76 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\UserProfile;
-use App\Services\UserProfileService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class UserProfileController extends Controller
 {
-    // protected $userProfileService;
-
-    // public function __construct(UserProfileService $userProfileService)
-    // {
-    //     $this->userProfileService = $userProfileService;
-    // }
-
     public function index()
     {
-        // $profile = $this->userProfileService->getAll();
-        $user = Auth::user();
-        $profile = UserProfile::where('user_id', $user->id)->first();
+        $user = auth()->user();
+
+        $profile = $user->profile;
+
+        if (!$profile) {
+            $profile = UserProfile::create([
+                'user_id' => $user->id,
+                'currency' => 'BDT',
+            ]);
+        }
 
         return Inertia::render('Settings/Profile', [
-            'profile' => $profile,
             'user' => $user,
+            'profile' => $profile,
         ]);
 
     }
 
-    
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,',
-            'phone' => 'nullable',
-            'address' => 'nullable',
-            'avatar' => 'nullable',
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'currency' => 'nullable|string|max:10',
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png,jfif|max:2048',
         ]);
-    
-        
-        DB::transaction(function () use ($request, $id) {
-    
-            User::where('id', $id)->updateOrCreate([
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-            ]);
-    
-            
-    
-            $imageName = null;
-    
-            if ($request->hasFile('avatar')) {
-    
-                $imageFile = $request->file('avatar');
-    
-                $imageName = time().'_'.$imageFile->getClientOriginalName();
-    
-                $imageFile->move(public_path('profiles'), $imageName);
+
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+        ]);
+
+        $profile = $user->profile;
+
+        $avatar = $profile?->avatar;
+
+        if ($request->hasFile('avatar')) {
+
+            if ($avatar) {
+                Storage::disk('public')->delete($avatar);
             }
-    
-            UserProfile::where('user_id', $id)->updateOrCreate([
-                'address' => $request->address,
-                'currency' => $request->currency,
-                'avatar' => 'profiles/' . $imageName
-            ]);
-    
-        });
-    
-        return redirect()
-            ->route('profiles.index')
-            ->with('success', 'Profile updated successfully.');
-    
+
+            $avatar = $request
+                ->file('avatar')
+                ->store('avatars', 'public');
         }
+
+        $user->profile()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'address' => $validated['address'] ?? null,
+                'currency' => $validated['currency'] ?? 'BDT',
+                'avatar' => $avatar,
+            ]
+        );
+
+        return back();
     }
-
-     
-
-    
-
-    
-
-
-          
-    
-
-
-
-
+}
