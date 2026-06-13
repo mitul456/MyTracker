@@ -14,10 +14,12 @@ use App\Repositories\Contracts\DashboardRepositoryInterface;
 use App\Repositories\Contracts\RecurringTransactionRepositoryInterface;
 use App\Repositories\Contracts\TransactionRepositoryInterface;
 use App\Repositories\Contracts\TransferRepositoryInterface;
+use App\Repositories\Contracts\UserProfileRepositoryInterface;
 use App\Repositories\DashboardRepository;
 use App\Repositories\RecurringTransactionRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\TransferRepository;
+use App\Repositories\UserProfileRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -59,6 +61,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             DashboardRepositoryInterface::class,
             DashboardRepository::class
+        );
+        $this->app->bind(
+            UserProfileRepositoryInterface::class,
+            UserProfileRepository::class
         );
     }
 

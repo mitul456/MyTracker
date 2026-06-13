@@ -48,14 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/print', [ReportController::class, 'print'])
     ->name('reports.print');
 
-<<<<<<< HEAD
-    Route::get('/profiles', function () {
-        return Inertia::render('Settings/Profile');
-    })->name('profiles.profile');
-    
-=======
-    Route::get('/profiles', [UserProfileController::class, 'index'])->name('profiles.profile');
->>>>>>> 8b85254030f891d91ef4edc244fe838cd0d7d63c
+    Route::get('/profiles', [UserProfileController::class, 'index'])->name('profiles.index');
+    Route::put('/profiles/{id}', [UserProfileController::class, 'update'])->name('profiles.update');
     Route::get('/security', function () {
         return Inertia::render('Settings/Security');
     })->name('profiles.Security');

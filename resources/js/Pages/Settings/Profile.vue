@@ -1,37 +1,48 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/vue3';
-import { Profiler } from 'react';
+
 
 const props = defineProps({
     user: Object,
-    Profiler: Object
+    profile: Object
 });
 
 
 
-const user = useForm({
+const form = useForm({
     name: props.user?.name ?? '',
     email: props.user?.email ?? '',
     phone: props.user?.phone ?? '',
-    address: props.user?.address ?? '',
-    
+    address: props.profile?.address ?? '',
+    currency: props.profile?.currency ?? 'USD',
+    avatar: null
     
 });
 
 
+
+
 const submit = () => {
-    user.post('/profile/update', {
+    
+    form.put(`/profiles/${props.user.id}`, {
         forceFormData: true,
         preserveScroll: true
     });
 }
+
+
+const previewImage = (event) => {
+    form.avatar = event.target.files[0];
+}
+
+
 </script>
 
 <template>
     <AppLayout>
 
-        <div class="max-w-6xl mx-auto">
+        <form @submit.prevent="submit" class="max-w-6xl mx-auto">
 
             <!-- Header -->
 
@@ -48,7 +59,7 @@ const submit = () => {
             </div>
 
             <div class="grid lg:grid-cols-3 gap-8">
-                <form>
+                
                     <!-- Left Card -->
 
                     <div
@@ -58,30 +69,31 @@ const submit = () => {
 
                             <!-- Avatar -->
 
-                            <!-- <div
+                            <div
                                 class="w-32 h-32 rounded-full bg-slate-800 border-4 border-slate-700 flex items-center justify-center overflow-hidden">
 
                                 <img
-                                    v-if="user.avatar"
-                                    :src="user.avatar"
+                                    v-if="profile?.avatar"
+                                    :src="`/profiles/${profile?.avatar}`"
                                     class="w-full h-full object-cover">
 
                                 <span
-                                    v-else=""
+                                    v-else
+                                    :src="`https://ui-avatars.com/api/?name=${user.name}`"
                                     class="text-5xl text-slate-500">
 
                                     👤
 
                                 </span>
 
-                            </div> -->
+                            </div>
 
-                            <button
+                            <input type="file" @change="previewImage"
                                 class="mt-6 px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold transition">
-
+                            
                                 Upload Photo
 
-                            </button>
+                            
 
                             <p class="text-slate-500 text-sm mt-3 text-center">
                                 JPG, PNG (Max: 2MB)
@@ -231,7 +243,7 @@ const submit = () => {
 
                                 <!-- Currency -->
 
-                                <!-- <div>
+                                <div>
 
                                     <label
                                         class="block text-sm text-slate-400 mb-2">
@@ -240,28 +252,32 @@ const submit = () => {
 
                                     </label>
 
-                                    <select
+                                    <select v-model="form.currency"
                                         class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white">
 
-                                        <option selected>
+                                        <option value="BDT" selected>
                                             BDT (৳)
                                         </option>
 
-                                        <option>
+                                        <option value="USD">
                                             USD ($)
                                         </option>
 
-                                        <option>
+                                        <option value="EUR">
                                             EUR (€)
                                         </option>
 
-                                        <option>
+                                        <option value="INR">
                                             INR (₹)
                                         </option>
 
                                     </select>
 
-                                </div> -->
+                                    <p v-if="form.errors.currency" class="text-red-400 text-sm">
+                                        {{ form.errors.currency }}
+                                    </p>
+
+                                </div>
 
                                 <div class="col-span-2">
 
@@ -306,10 +322,10 @@ const submit = () => {
                         </div>
 
                     </div>
-                </form>
+                
             </div>
 
-        </div>
+        </form>
 
     </AppLayout>
 </template>
