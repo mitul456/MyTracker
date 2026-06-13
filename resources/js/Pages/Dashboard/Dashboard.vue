@@ -10,6 +10,7 @@ defineProps({
     budgets: Array,
     transactions: Array,
     accounts: Array,
+    currency: Array,
 });
 
 const formatAmount = (amount) => {
@@ -60,7 +61,7 @@ const formatAmount = (amount) => {
                         </div>
                     </div>
                     <div class="mt-4">
-                        <h3 class="text-3xl font-bold text-white">${{ formatAmount(netBalance) }}</h3>
+                        <h3 class="text-3xl font-bold text-white">{{ currency }}{{ formatAmount(netBalance) }}</h3>
                         <p class="text-xs text-emerald-400 flex items-center gap-1 mt-1"><span>↑ 12%</span> <span
                                 class="text-slate-500">from last month</span></p>
                     </div>
@@ -79,7 +80,7 @@ const formatAmount = (amount) => {
                         </div>
                     </div>
                     <div class="mt-4">
-                        <h3 class="text-3xl font-bold text-white">${{ formatAmount(totalIncome) }}</h3>
+                        <h3 class="text-3xl font-bold text-white">{{ currency }}{{ formatAmount(totalIncome) }}</h3>
                         <p class="text-xs text-slate-500 mt-1">This current month</p>
                     </div>
                 </div>
@@ -98,7 +99,7 @@ const formatAmount = (amount) => {
                         </div>
                     </div>
                     <div class="mt-4">
-                        <h3 class="text-3xl font-bold text-white">${{ formatAmount(totalExpenses) }}</h3>
+                        <h3 class="text-3xl font-bold text-white">{{ currency }}{{ formatAmount(totalExpenses) }}</h3>
                         <p class="text-xs text-rose-400 flex items-center gap-1 mt-1"><span>↓ 4%</span> <span
                                 class="text-slate-500">of active budgets spent</span></p>
                     </div>
@@ -119,7 +120,7 @@ const formatAmount = (amount) => {
                                     <p class="text-sm font-semibold text-white">{{account.name }}</p>
                                     <p class="text-xs text-slate-500 mt-0.5">Active Account</p>
                                 </div>
-                                <span class="text-base font-bold text-cyan-400">${{ formatAmount(account.balance) }}</span>
+                                <span class="text-base font-bold text-cyan-400">{{ currency }}{{ formatAmount(account.balance) }}</span>
                             </div>
                         </div>
                     </div>
@@ -155,7 +156,7 @@ const formatAmount = (amount) => {
                                         <td class="py-3.5 text-slate-400">Account #{{ tx.account.name }}</td>
                                         <td
                                             :class="['py-3.5 text-right font-bold', tx.type === 'income' ? 'text-emerald-400' : 'text-rose-400']">
-                                            {{ tx.type === 'income' ? '+' : '-' }}${{ formatAmount(tx.amount) }}
+                                            {{ tx.type === 'income' ? '+' : '-' }}{{ currency }}{{ formatAmount(tx.amount) }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -172,7 +173,7 @@ const formatAmount = (amount) => {
                             <div v-for="budget in budgets" :key="budget.id" class="space-y-2">
                                 <div class="flex items-center justify-between text-xs">
                                     <span class="font-medium text-slate-300">Category #{{ budget.category.name }}</span>
-                                    <span class="text-slate-400"><strong class="text-white">${{ formatAmount(budget.amount)
+                                    <span class="text-slate-400"><strong class="text-white">{{ currency }}{{ formatAmount(budget.amount)
                                             }}</strong> Limit</span>
                                 </div>
                                 <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">

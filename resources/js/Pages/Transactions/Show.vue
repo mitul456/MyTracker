@@ -79,7 +79,7 @@ const formatDate = (date) => {
                         v-if="transaction.type === 'income'"
                         class="mt-2 text-4xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
 
-                        + ${{ formatAmount(transaction.amount) }}
+                        + {{transaction.currency}}{{ formatAmount(transaction.amount) }}
 
                     </h2>
   
@@ -87,7 +87,7 @@ const formatDate = (date) => {
                         v-else
                         class="mt-2 text-4xl font-black tracking-tight text-rose-400">
 
-                        - ${{ formatAmount(transaction.amount) }}
+                        - {{transaction.currency}}{{ formatAmount(transaction.amount) }}
 
                     </h2>
 

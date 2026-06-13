@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     protected $fillable = [
-        'user_id', 
-        'name', 
+        'user_id',
+        'name',
         'balance'
     ];
 
@@ -20,5 +20,12 @@ class Account extends Model
     public function transfers()
     {
         return $this->hasMany(Transfer::class);
+    }
+
+    protected $appends = ['currency'];
+
+    public function getCurrencyAttribute()
+    {
+        return $this->user?->profile?->currency;
     }
 }

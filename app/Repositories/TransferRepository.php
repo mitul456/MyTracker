@@ -11,7 +11,7 @@ class TransferRepository implements TransferRepositoryInterface
 {
     public function all()
     {
-        $transfer = Transfer::where('user_id', auth()->id())->with(['fromAccount', 'toAccount'])->get();
+        $transfer = Transfer::where('user_id', auth()->id())->with(['fromAccount', 'toAccount', 'user.profile'])->get();
         return $transfer;
     }
     public function find($id)

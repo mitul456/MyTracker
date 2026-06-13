@@ -9,7 +9,7 @@ class TransactionRepository implements TransactionRepositoryInterface
 {
     public function all()
     {
-        $transactions = Transaction::where('user_id', auth()->id())->with(['account', 'category'])->latest()->paginate(5);
+        $transactions = Transaction::where('user_id', auth()->id())->with(['account', 'category', 'user.profile'])->latest()->paginate(5);
         return $transactions;
     }
 
