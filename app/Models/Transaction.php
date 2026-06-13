@@ -15,7 +15,7 @@ class Transaction extends Model
         'note',
         'transaction_date'
     ];
-    
+
 
     public function user()
     {
@@ -30,5 +30,12 @@ class Transaction extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    protected $appends = ['currency'];
+
+    public function getCurrencyAttribute()
+    {
+        return $this->user?->profile?->currency;
     }
 }

@@ -9,7 +9,7 @@ class AccountRepository implements AccountRepositoryInterface
 {
     public function all()
     {
-        return Account::where('user_id', auth()->id())->latest()->paginate(6);
+        return Account::where('user_id', auth()->id())->with(['user.profile'])->latest()->paginate(6);
     }
 
     public function find($id)

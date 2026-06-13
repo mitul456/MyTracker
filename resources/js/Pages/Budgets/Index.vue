@@ -96,7 +96,7 @@ const totalBudget = computed(() => {
                 <h3
                     class="text-3xl font-bold text-cyan-400 mt-2">
 
-                    ${{ formatAmount(totalBudget) }}
+                    {{ budgets[0].currency }}{{ formatAmount(totalBudget) }}
 
                 </h3>
 
@@ -189,7 +189,7 @@ const totalBudget = computed(() => {
                                     <span
                                         class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
 
-                                        ${{ formatAmount(budget.amount) }}
+                                        {{ budget.currency }}{{ formatAmount(budget.amount) }}
 
                                     </span>
 

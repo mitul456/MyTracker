@@ -128,7 +128,7 @@ const logout = () => {
 
                 <!-- Dropdown -->
                 <div v-show="settingsOpen" class="ml-6 mt-1 space-y-1">
-                    <Link href="/profiles"
+                    <Link href="/profile"
                         class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900/60 text-sm transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -139,7 +139,7 @@ const logout = () => {
                     </Link>
                 </div>
                 <div v-show="settingsOpen" class="ml-6 mt-1 space-y-1">
-                    <Link href="/security"
+                    <Link href="/settings/security"
                         class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900/60 text-sm transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

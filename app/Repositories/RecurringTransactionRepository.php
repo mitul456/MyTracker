@@ -8,7 +8,7 @@ use App\Repositories\Contracts\RecurringTransactionRepositoryInterface;
 class RecurringTransactionRepository implements RecurringTransactionRepositoryInterface
 {
     public function all(){
-        $recurringTransactions = RecurringTransaction::where('user_id', auth()->id())->with(['account', 'category'])->latest()->get();
+        $recurringTransactions = RecurringTransaction::where('user_id', auth()->id())->with(['account', 'category', 'user.profile'])->latest()->get();
         return $recurringTransactions;
     }
     public function find($id){

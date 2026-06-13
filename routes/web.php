@@ -32,8 +32,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
-
-
     Route::resource('/accounts', AccountController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/transactions', TransactionController::class);
@@ -49,10 +47,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/print', [ReportController::class, 'print'])
         ->name('reports.print');
 
-    Route::get('/profiles', [UserProfileController::class, 'index'])
+    Route::get('/profile', [UserProfileController::class, 'index'])
         ->name('profiles.profile');
     Route::put('/profiles/update', [UserProfileController::class, 'update'])
         ->name('profile.update');
 
-    Route::get('/security', [SecurityController::class, 'index'])->name('security.index');
+
+
+    Route::get('/settings/security', [SecurityController::class, 'index'])
+        ->name('settings.security');
+
+    Route::put('/settings/password', [SecurityController::class, 'updatePassword'])
+        ->name('settings.password.update');
+
+    Route::post('/settings/email/resend', [SecurityController::class, 'resendVerification'])
+        ->name('verification.send');
+
+    Route::post('/settings/logout-other-devices', [SecurityController::class, 'logoutOtherDevices'])
+        ->name('settings.logout-other-devices');
+
+    Route::delete('/settings/account', [SecurityController::class, 'destroy'])
+        ->name('settings.account.destroy');
+
 });
