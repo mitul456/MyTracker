@@ -19,7 +19,7 @@ class ReportController extends Controller
     }
     public function index(Request $request)
     {
-        $query = Transaction::with([
+        $query = Transaction::where('user_id', auth()->id())->with([
             'user',
             'account',
             'category',
@@ -76,7 +76,7 @@ class ReportController extends Controller
             ->withQueryString();
 
 
-        $incomeExpenseChart = Transaction::selectRaw("
+        $incomeExpenseChart = Transaction::where('user_id', auth()->id())->selectRaw("
         DATE(transaction_date) as date,
         SUM(CASE WHEN type='income' THEN amount ELSE 0 END) as income,
         SUM(CASE WHEN type='expense' THEN amount ELSE 0 END) as expense
@@ -85,12 +85,12 @@ class ReportController extends Controller
         ->orderBy('date')
         ->get();
 
-        $categoryBreakdown = Transaction::with('category')
+        $categoryBreakdown = Transaction::where('user_id', auth()->id())->with('category')
         ->selectRaw('category_id,SUM(amount) as total')
         ->groupBy('category_id')
         ->get();
 
-        $transactionTrend = Transaction::selectRaw("
+        $transactionTrend = Transaction::where('user_id', auth()->id())->selectRaw("
             DATE(transaction_date) as date,
             SUM(amount) as total
         ")

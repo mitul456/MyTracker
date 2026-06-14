@@ -112,7 +112,7 @@ const usagePercentage = computed(() => {
                         <h3
                             class="mt-2 text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
 
-                            {{ budget.currency }}{{ formatAmount(budget.amount) }}
+                            {{ budget.currency}}{{ formatAmount(budget.amount) }}
 
                         </h3>
 
@@ -165,7 +165,7 @@ const usagePercentage = computed(() => {
 
                     <h4 class="mt-3 text-xl font-bold text-cyan-400">
 
-                        {{budget.currency}}{{ formatAmount(budget.amount) }}
+                        {{ budget.currency}}{{ formatAmount(budget.amount) }}
 
                     </h4>
 
@@ -180,7 +180,7 @@ const usagePercentage = computed(() => {
                     </p>
 
                     <h4 class="mt-3 text-xl font-bold text-rose-400">
-                        {{budget.currency}}{{ formatAmount(spentAmount) }}
+                        {{ budget.currency}}{{ formatAmount(spentAmount) }}
                     </h4>
 
                 </div>
@@ -195,7 +195,7 @@ const usagePercentage = computed(() => {
 
                     <h4 class="mt-3 text-xl font-bold"
                         :class="remainingAmount >= 0 ? 'text-emerald-400' : 'text-red-500'">
-                        {{budget.currency}}{{ formatAmount(remainingAmount) }}
+                        {{ budget.currency}}{{ formatAmount(remainingAmount) }}
                     </h4>
 
                 </div>
@@ -286,7 +286,7 @@ const usagePercentage = computed(() => {
                         </span>
 
                         <span class="text-white font-bold">
-                            {{budget.currency}}{{ formatAmount(budget.amount) }}
+                            {{ budget?.currency || '$' }}{{ formatAmount(budget.amount) }}
                         </span>
 
                     </div>
@@ -294,14 +294,14 @@ const usagePercentage = computed(() => {
                     <div class="flex items-center justify-between">
                         <span class="text-slate-500">Total Expense</span>
                         <span class="text-rose-400 font-bold">
-                            {{budget.currency}}{{ formatAmount(spentAmount) }}
+                            {{ budget?.currency || '$' }}{{ formatAmount(spentAmount) }}
                         </span>
                     </div>
 
                     <div class="flex items-center justify-between">
                         <span class="text-slate-500">Remaining Budget</span>
                         <span class="text-emerald-400 font-bold">
-                            {{budget.currency}}{{ formatAmount(remainingAmount) }}
+                            {{ budget?.currency || '$' }}{{ formatAmount(remainingAmount) }}
                         </span>
                     </div>
 

@@ -190,7 +190,7 @@ const destroy = (item) => {
                                 </td>
 
                                 <td class="px-6 py-4 font-bold text-white">
-                                    {{item.currency}}{{ formatAmount(item.amount) }}
+                                    {{item?.currency || '$'}}{{ formatAmount(item.amount) }}
                                 </td>
 
                                 <td class="px-6 py-4 text-slate-300 capitalize">

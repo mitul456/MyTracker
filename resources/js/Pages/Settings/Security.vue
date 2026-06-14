@@ -1,10 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm, usePage, Link } from '@inertiajs/vue3';
 
-const page = usePage();
-
-const emailVerified = page.props.emailVerified;
 
 const passwordForm = useForm({
     current_password: '',
@@ -19,23 +16,11 @@ const updatePassword = () => {
     });
 };
 
-const resendVerification = () => {
-    passwordForm.post(route('verification.send'));
-};
 
 const logoutForm = useForm({
     password: '',
 });
 
-const logoutOtherDevices = () => {
-    const password = prompt('Enter your password');
-
-    if (!password) return;
-
-    logoutForm.password = password;
-
-    logoutForm.post(route('settings.logout-other-devices'));
-};
 
 const deleteForm = useForm({
     password: '',
@@ -176,20 +161,20 @@ const deleteAccount = () => {
 
                     <div class="flex items-center gap-3">
 
-                        <span v-if="emailVerified"
+                        <span
                             class="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">
                             Verified
                         </span>
 
-                        <span v-else
+                        <!-- <span
                             class="px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-semibold">
                             Not Verified
-                        </span>
+                        </span> -->
 
-                        <button v-if="!emailVerified" @click="resendVerification"
+                        <Link href="/send-otp"
                             class="px-5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white hover:bg-slate-700">
-                            Resend Verification
-                        </button>
+                            Send Verification
+                        </Link>
 
                     </div>
 

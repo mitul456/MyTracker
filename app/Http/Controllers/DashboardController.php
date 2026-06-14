@@ -23,7 +23,10 @@ class DashboardController extends Controller
         $budgets = $this->dashboardService->getBudgetSummary();
         $accounts = $this->dashboardService->accounts();
         $transactions = $this->dashboardService->transactions();
-        $currency = UserProfile::where('user_id', auth()->user()->id)->first()->currency;
+        $currency = '$';
+        if ($currency) {
+            $currency = UserProfile::where('user_id', auth()->user()->id)->first()->currency;
+        }
 
         return Inertia::render('Dashboard/Dashboard', [
             'totalIncome' => $totalIncome,

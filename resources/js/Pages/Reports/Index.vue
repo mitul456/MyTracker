@@ -339,7 +339,7 @@ const formatAmount = (amount) => {
 
                     <h3 class="text-3xl font-black text-cyan-400 mt-3">
 
-                        {{currency}}{{ formatAmount(netBalance) }}
+                        {{currency || '$'}}{{ formatAmount(netBalance) }}
 
                     </h3>
 
