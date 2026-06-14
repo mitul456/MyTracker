@@ -11,7 +11,7 @@ const submit = () => {
 };
 
 const resendOtp = () => {
-    form.post('/resend-otp');
+    form.get('/send-otp');
 };
 </script>
 

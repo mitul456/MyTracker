@@ -17,16 +17,17 @@ class AuthService
     public function register(array $data)
     {
         $data['password'] = Hash::make($data['password']);
+        $data['otp'] = rand(100000, 999999);
         return $this->repository->register($data);
     }
 
-    public function login(array $data)
+    public function login(array $data): bool
     {
         return $this->repository->login($data);
     }
 
-    public function logout()
+    public function logout():void
     {
-        return $this->repository->logout();
+        $this->repository->logout();
     }
 }

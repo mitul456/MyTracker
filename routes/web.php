@@ -75,5 +75,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/send-otp', [MailController::class, 'sendOTP']);
     Route::get('/verify-otp', [MailController::class, 'verifyOTPPage']);
     Route::post('/verify-otp', [MailController::class, 'verifyOTP']);
+    
 
 });
