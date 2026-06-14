@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Login;
 use App\Http\Requests\Register;
 use App\Services\AuthService;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class AuthController extends Controller
@@ -31,23 +33,34 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $this->authService->register($data);
-        return redirect('/login')->with('message', 'Registration successful. Please login.');
+        return redirect('/login')->with('success', 'Registration successful. Please login.');
     }
 
     public function login(Login $request)
     {
-        $data = $request->validated();
-        $authenticated = $this->authService->login($data);
-
-        if (!$authenticated) {
-            return redirect('/login')->with('message', 'Invalid credentials. Please try again.');
+        
+        if(!$this->authService->login($request->validated())) {
+             
+            throw ValidationException::withMessages([
+               'login'=>'Invalid Email or Password.' 
+            ]);
+            
         }
-        return redirect('/dashboard')->with('message', 'Login successful');
+        
+        $request->session()->regenerate();
+        return redirect('/dashboard')->with('success', 'Login successful.');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         $this->authService->logout();
-        return redirect('/login')->with('message', 'You have been logged out.');
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('success', 'You have been logged out.');
     }
 }
+
+

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -37,6 +38,12 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            
+            'flash' => [
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error')
+            ],
+
             'auth' => [
                 'user' => auth()->user()
             ]

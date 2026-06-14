@@ -1,5 +1,7 @@
 <?php
 
+
+
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BudgetController;
@@ -13,11 +15,13 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+
 
 Route::get('/', function () {
     return redirect('/login');
 });
+
+
 
 
 Route::middleware('guest')->group(function () {
@@ -71,5 +75,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/send-otp', [MailController::class, 'sendOTP']);
     Route::get('/verify-otp', [MailController::class, 'verifyOTPPage']);
     Route::post('/verify-otp', [MailController::class, 'verifyOTP']);
+    
 
 });

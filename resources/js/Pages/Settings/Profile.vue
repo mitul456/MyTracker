@@ -9,6 +9,8 @@ const props = defineProps({
     profile: Object
 });
 
+
+
 const form = useForm({
     name: props.user?.name || '',
     email: props.user?.email || '',
@@ -216,39 +218,7 @@ const openFilePicker = () => {
 
                                 </div>
 
-                                <!-- Timezone -->
-
-                                <!-- <div>
-
-                                <label
-                                    class="block text-sm text-slate-400 mb-2">
-
-                                    Timezone
-
-                                </label>
-
-                                <select
-                                    class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white">
-
-                                    <option selected>
-                                        Asia/Dhaka
-                                    </option>
-
-                                    <option>
-                                        Asia/Kolkata
-                                    </option>
-
-                                    <option>
-                                        UTC
-                                    </option>
-
-                                    <option>
-                                        Europe/London
-                                    </option>
-
-                                </select>
-
-                            </div> -->
+                                
 
                                 <!-- Currency -->
 
@@ -325,9 +295,10 @@ const openFilePicker = () => {
                     </div>
 
                 </div>
-
+                
             </div>
         </form>
 
     </AppLayout>
 </template>
+

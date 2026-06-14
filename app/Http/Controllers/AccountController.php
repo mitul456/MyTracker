@@ -42,7 +42,7 @@ class AccountController extends Controller
     {
         $accounts =$request->validated();
         $this->accountService->create($accounts);
-        return redirect()->route('accounts.index');
+        return redirect()->route('accounts.index')->with('success', 'Account created successfully.');
     }
 
     /**
@@ -70,7 +70,7 @@ class AccountController extends Controller
     {
         $accounts = $request->validated();
         $this->accountService->update($id, $accounts);
-        return redirect()->route('accounts.index');
+        return redirect()->route('accounts.index')->with('success', 'Account updated successfully.');
     }
 
     /**
@@ -82,3 +82,5 @@ class AccountController extends Controller
         return redirect()->route('accounts.index');
     }
 }
+
+

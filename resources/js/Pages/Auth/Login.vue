@@ -59,6 +59,9 @@ const submit = () => {
                         </div>
                         <input v-model="form.email" type="email" placeholder="you@example.com"
                             class="w-full pl-11 pr-4 py-3 bg-slate-950/40 border border-slate-800/80 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/80 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 hover:border-slate-700">
+                        <p v-if="form.errors.login" class="text-red-400 text-sm">
+                            {{ form.errors.login }}
+                        </p>
                     </div>
                 </div>
 
@@ -80,6 +83,9 @@ const submit = () => {
                         </div>
                         <input v-model="form.password" type="password" placeholder="••••••••"
                             class="w-full pl-11 pr-4 py-3 bg-slate-950/40 border border-slate-800/80 rounded-xl text-white placeholder-slate-600 focus:outline-none focus:border-cyan-500/80 focus:ring-1 focus:ring-cyan-500/30 transition-all duration-200 hover:border-slate-700">
+                        <p v-if="form.errors.password" class="text-red-400 text-sm">
+                            {{ form.errors.password }}
+                        </p>   
                     </div>
                 </div>
 

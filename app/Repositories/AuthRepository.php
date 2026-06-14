@@ -24,17 +24,21 @@ class AuthRepository implements AuthRepositoryInterface
         });
     }
 
-    public function login(array $data)
+    public function login(array $data): bool
     {
-        $credentials = Auth::attempt($data);
-        return $credentials;
+        return Auth::attempt(
+            [
+                'email' => $data['email'],
+                'password' => $data['password']
+            ]
+        );
+        $data['remember'] ?? false;
     }
 
-    public function logout()
+    public function logout():void
     {
         Auth::logout();
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
-        return true;
+        
     }   
 }
+        
