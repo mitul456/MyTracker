@@ -11,10 +11,12 @@ use App\Repositories\Contracts\AuthRepositoryInterface;
 use App\Repositories\Contracts\BudgetRepositoryInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\DashboardRepositoryInterface;
+use App\Repositories\Contracts\OTPMailRepositoryInterface;
 use App\Repositories\Contracts\RecurringTransactionRepositoryInterface;
 use App\Repositories\Contracts\TransactionRepositoryInterface;
 use App\Repositories\Contracts\TransferRepositoryInterface;
 use App\Repositories\DashboardRepository;
+use App\Repositories\OTPMailRepository;
 use App\Repositories\RecurringTransactionRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\TransferRepository;
@@ -59,6 +61,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             DashboardRepositoryInterface::class,
             DashboardRepository::class
+        );
+        $this->app->bind(
+            OTPMailRepositoryInterface::class,
+            OTPMailRepository::class
         );
     }
 

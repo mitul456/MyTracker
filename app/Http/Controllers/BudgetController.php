@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BudgetCreate;
 use App\Models\Transaction;
+use App\Models\UserProfile;
 use App\Services\BudgetService;
 use Inertia\Inertia;
 
@@ -17,7 +18,11 @@ class BudgetController extends Controller
     public function index()
     {
         $budgets = $this->budgetService->getAll();
-        return Inertia::render('Budgets/Index', ['budgets' => $budgets]);
+        $currency = UserProfile::where('user_id', auth()->user()->id)->first()->currency;
+        return Inertia::render('Budgets/Index', [
+            'budgets' => $budgets,
+            'currency' => $currency
+        ]);
     }
 
     /**

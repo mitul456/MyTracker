@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountCreate;
 use App\Models\Account;
+use App\Models\UserProfile;
 use App\Services\AccountService;
 use Inertia\Inertia;
 
@@ -18,9 +19,11 @@ class AccountController extends Controller
     {
         $accounts = $this->accountService->getAll();
         $totalNetWorth = $this->accountService->totalNetWorth();
+        $currency = UserProfile::where('user_id', auth()->user()->id)->first()->currency;
         return Inertia::render('Accounts/Index', [
             'accounts' => $accounts,
-            'totalNetWorth' => $totalNetWorth
+            'totalNetWorth' => $totalNetWorth,
+            'currency' => $currency
         ]);
     }
 

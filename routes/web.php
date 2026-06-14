@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SecurityController;
@@ -68,5 +69,10 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/settings/account', [SecurityController::class, 'destroy'])
         ->name('settings.account.destroy');
+
+
+    Route::get('/send-otp', [MailController::class, 'sendOTP']);
+    Route::get('/verify-otp', [MailController::class, 'verifyOTPPage']);
+    Route::post('/verify-otp', [MailController::class, 'verifyOTP']);
 
 });

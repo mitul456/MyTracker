@@ -154,7 +154,7 @@ const logout = () => {
 
         <!-- Logout Area -->
         <div class="p-4 border-t border-slate-800/80">
-            <Link @click="logout" href="/logout"
+            <Link @click="logout"
                 class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-rose-950/30 border border-slate-800 hover:border-rose-900/50 rounded-xl text-sm font-medium text-slate-400 hover:text-rose-400 transition-all cursor-pointer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
