@@ -27,13 +27,13 @@ class MailController extends Controller
     public function verifyOTP(Request $request) {
 
         $user = auth()->user();
-        $otp = $user->otp = null;
+        $otp = $user->otp;
         $status = $user->status = true;
 
         if ($request->input('otp') === $otp) {
             $user->update([
                 'status' => $status,
-                'otp' => $otp
+                'otp' => null
             ]);
                    
             return redirect('/dashboard')->with('success', 'OTP verified successfully');

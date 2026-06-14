@@ -13,7 +13,6 @@ class SecurityController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Settings/Security', [
-            'emailVerified' => !is_null($request->user()->email_verified_at),
             'user' => $request->user(),
         ]);
     }
@@ -36,22 +35,17 @@ class SecurityController extends Controller
         return back()->with('success', 'Password updated successfully.');
     }
 
-    public function resendVerification(Request $request)
-    {
-        if ($request->user()->hasVerifiedEmail()) {
-            return back();
-        }
-
-        $request->user()->sendEmailVerificationNotification();
-
-        return back()->with('success', 'Verification email sent.');
-    }
-
     public function logoutOtherDevices(Request $request)
     {
         $request->validate([
             'password' => ['required'],
         ]);
+
+        if (!Hash::check($request->password, auth()->user()->password)) {
+            return back()->withErrors([
+                'password' => 'The password is incorrect.',
+            ]);
+        }
 
         Auth::logoutOtherDevices($request->password);
 
@@ -75,6 +69,5 @@ class SecurityController extends Controller
 
         return redirect('/');
     }
-
 
 }
