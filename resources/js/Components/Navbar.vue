@@ -27,12 +27,18 @@
                 <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-500 p-[1px]">
                     <div class="w-full h-full bg-slate-900 rounded-[11px] flex items-center justify-center text-xs font-bold text-cyan-400">MT</div>
                 </div>
-                <span class="text-xs font-medium text-slate-300 hidden md:block">Account Owner</span>
+                <span class="text-xs font-medium text-slate-300 hidden md:block">{{ user.name }}</span>
             </div>
         </div>
     </nav>
 </template>
 
 <script setup>
+import { usePage } from '@inertiajs/vue3';
+
+
 defineEmits(['toggle-sidebar']);
+
+const user = usePage().props.auth?.user
+
 </script>

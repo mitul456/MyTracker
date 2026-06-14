@@ -1,7 +1,10 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { useForm, usePage, Link } from '@inertiajs/vue3';
+import { useForm, Link } from '@inertiajs/vue3';
 
+defineProps({
+    user: Object
+});
 
 const passwordForm = useForm({
     current_password: '',
@@ -13,6 +16,23 @@ const updatePassword = () => {
     passwordForm.put('/settings/password', {
         preserveScroll: true,
         onSuccess: () => passwordForm.reset(),
+    });
+};
+
+const logoutOtherDevices = () => {
+    const password = prompt(
+        'Please enter your password'
+    );
+
+    if (!password) return;
+
+    logoutForm.password = password;
+
+    logoutForm.post('/settings/logout-other-devices', {
+        preserveScroll: true,
+        onSuccess: () => {
+            logoutForm.reset();
+        },
     });
 };
 
@@ -35,7 +55,7 @@ const deleteAccount = () => {
 
     deleteForm.password = password;
 
-    deleteForm.delete(route('settings.account.destroy'));
+    deleteForm.delete('/settings/account');
 };
 </script>
 
@@ -161,15 +181,15 @@ const deleteAccount = () => {
 
                     <div class="flex items-center gap-3">
 
-                        <span
+                        <span v-if="user.status === 1"
                             class="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">
                             Verified
                         </span>
 
-                        <!-- <span
+                        <span v-else="user.status === 0"
                             class="px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-semibold">
                             Not Verified
-                        </span> -->
+                        </span>
 
                         <Link href="/send-otp"
                             class="px-5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white hover:bg-slate-700">

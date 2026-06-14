@@ -61,9 +61,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/password', [SecurityController::class, 'updatePassword'])
         ->name('settings.password.update');
 
-    Route::post('/settings/email/resend', [SecurityController::class, 'resendVerification'])
-        ->name('verification.send');
-
     Route::post('/settings/logout-other-devices', [SecurityController::class, 'logoutOtherDevices'])
         ->name('settings.logout-other-devices');
 
