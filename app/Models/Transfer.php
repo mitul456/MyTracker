@@ -28,4 +28,11 @@ class Transfer extends Model
     {
         return $this->belongsTo(Account::class, 'to_account_id');
     }
+
+    protected $appends = ['currency'];
+
+    public function getCurrencyAttribute()
+    {
+        return $this->user?->profile?->currency;
+    }
 }

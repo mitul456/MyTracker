@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SecurityController;
@@ -36,8 +37,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
-
-
     Route::resource('/accounts', AccountController::class);
     Route::resource('/categories', CategoryController::class);
     Route::resource('/transactions', TransactionController::class);
@@ -58,5 +57,23 @@ Route::middleware('auth')->group(function () {
     Route::put('/profiles/update', [UserProfileController::class, 'update'])
         ->name('profile.update');
 
-    Route::get('/security', [SecurityController::class, 'index'])->name('security.index');
+
+
+    Route::get('/settings/security', [SecurityController::class, 'index'])
+        ->name('settings.security');
+
+    Route::put('/settings/password', [SecurityController::class, 'updatePassword'])
+        ->name('settings.password.update');
+
+    Route::post('/settings/logout-other-devices', [SecurityController::class, 'logoutOtherDevices'])
+        ->name('settings.logout-other-devices');
+
+    Route::delete('/settings/account', [SecurityController::class, 'destroy'])
+        ->name('settings.account.destroy');
+
+
+    Route::get('/send-otp', [MailController::class, 'sendOTP']);
+    Route::get('/verify-otp', [MailController::class, 'verifyOTPPage']);
+    Route::post('/verify-otp', [MailController::class, 'verifyOTP']);
+
 });

@@ -5,6 +5,7 @@ import { Link, useForm } from '@inertiajs/vue3';
 // Accept core dynamic schema inputs sent from Laravel backend controller
 const props = defineProps({
     accounts: Object,
+    currency: Array,
     totalNetWorth: Number,
 });
 
@@ -56,7 +57,7 @@ const formatBalance = (value) => {
                 <div class="relative bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-2xl p-6">
                     <div class="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent"></div>
                     <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Net Worth</p>
-                    <h3 class="text-3xl font-bold text-white mt-2">${{ formatBalance(totalNetWorth) }}</h3>
+                    <h3 class="text-3xl font-bold text-white mt-2">{{ currency }}{{ formatBalance(totalNetWorth) }}</h3>
                     <p class="text-xs text-slate-500 mt-1">Combined assets from all accounts</p>
                 </div>
             </div>
@@ -93,7 +94,7 @@ const formatBalance = (value) => {
                     <div class="mt-6 pt-4 border-t border-slate-800/60 flex items-baseline justify-between">
                         <span class="text-xs font-medium text-slate-500">Current Balance</span>
                         <span class="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
-                            ${{ formatBalance(account.balance) }}
+                            {{currency}}{{ formatBalance(account.balance) }}
                         </span>
                     </div>
 

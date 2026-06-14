@@ -8,7 +8,7 @@ use App\Repositories\Contracts\BudgetRepositoryInterface;
 class BudgetRepository implements BudgetRepositoryInterface
 {
     public function all(){
-        return Budget::where('user_id', auth()->id())->with('category')->latest()->get();
+        return Budget::where('user_id', auth()->id())->with(['category', 'user.profile'])->latest()->get();
     }
     public function find($id){
         return Budget::where('user_id', auth()->id())->with('category')->findOrFail($id);

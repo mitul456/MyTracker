@@ -195,7 +195,7 @@ const formatDate = (date) => {
                                     <span
                                         class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
 
-                                        ৳{{ formatAmount(transfer.amount) }}
+                                        {{transfer.currency}}{{ formatAmount(transfer.amount) }}
 
                                     </span>
 

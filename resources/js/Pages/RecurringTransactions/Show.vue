@@ -104,7 +104,7 @@ const formatAmount = (amount) => {
                         </p>
 
                         <h3 class="text-xl font-bold text-cyan-400 mt-2">
-                            ৳{{ formatAmount(recurringTransaction.amount) }}
+                            {{recurringTransaction?.currency || '$'}}{{ formatAmount(recurringTransaction.amount) }}
                         </h3>
                     </div>
 
@@ -204,7 +204,7 @@ const formatAmount = (amount) => {
                         </p>
 
                         <p class="text-cyan-400 text-2xl font-bold mt-2">
-                            ৳{{ formatAmount(recurringTransaction.amount) }}
+                            {{recurringTransaction?.currency || '$'}}{{ formatAmount(recurringTransaction.amount) }}
                         </p>
                     </div>
 

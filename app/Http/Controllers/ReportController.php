@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\UserProfile;
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,7 +22,7 @@ class ReportController extends Controller
         $query = Transaction::where('user_id', auth()->id())->with([
             'user',
             'account',
-            'category'
+            'category',
         ]);
 
         if ($request->filled('start_date')) {
@@ -97,6 +98,8 @@ class ReportController extends Controller
         ->orderBy('date')
         ->get();
 
+        $currency = UserProfile::where('user_id', auth()->user()->id)->first()->currency;
+
         return Inertia::render('Reports/Index', [
             'transactions' => $transactions,
             'accounts' => $this->reportService->getAccounts(),
@@ -104,6 +107,7 @@ class ReportController extends Controller
             'incomeExpenseChart' => $incomeExpenseChart,
             'categoryBreakdown' => $categoryBreakdown,
             'transactionTrend' => $transactionTrend,
+            'currency' => $currency,
 
             'filters' => $request->only([
                 'start_date',

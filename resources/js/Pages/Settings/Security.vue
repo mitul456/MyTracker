@@ -1,12 +1,62 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { reactive } from 'vue';
+import { useForm, Link } from '@inertiajs/vue3';
 
-const passwordForm = reactive({
+defineProps({
+    user: Object
+});
+
+const passwordForm = useForm({
     current_password: '',
     password: '',
     password_confirmation: '',
 });
+
+const updatePassword = () => {
+    passwordForm.put('/settings/password', {
+        preserveScroll: true,
+        onSuccess: () => passwordForm.reset(),
+    });
+};
+
+const logoutOtherDevices = () => {
+    const password = prompt(
+        'Please enter your password'
+    );
+
+    if (!password) return;
+
+    logoutForm.password = password;
+
+    logoutForm.post('/settings/logout-other-devices', {
+        preserveScroll: true,
+        onSuccess: () => {
+            logoutForm.reset();
+        },
+    });
+};
+
+
+const logoutForm = useForm({
+    password: '',
+});
+
+
+const deleteForm = useForm({
+    password: '',
+});
+
+const deleteAccount = () => {
+    const password = prompt(
+        'Please enter your password to delete account'
+    );
+
+    if (!password) return;
+
+    deleteForm.password = password;
+
+    deleteForm.delete('/settings/account');
+};
 </script>
 
 <template>
@@ -48,7 +98,7 @@ const passwordForm = reactive({
 
                 </div>
 
-                <form class="space-y-6">
+                <form @submit.prevent="updatePassword" class="space-y-6">
 
                     <div>
 
@@ -56,10 +106,12 @@ const passwordForm = reactive({
                             Current Password
                         </label>
 
-                        <input
-                            type="password" placeholder="Enter your current password"
+                        <input type="password" placeholder="Enter your current password"
                             v-model="passwordForm.current_password"
                             class="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-cyan-500">
+                        <p v-if="passwordForm.errors.current_password" class="text-red-400 text-sm mt-2">
+                            {{ passwordForm.errors.current_password }}
+                        </p>
 
                     </div>
 
@@ -71,10 +123,11 @@ const passwordForm = reactive({
                                 New Password
                             </label>
 
-                            <input
-                                type="password" placeholder="Enter your new password"
-                                v-model="passwordForm.password"
+                            <input type="password" placeholder="Enter your new password" v-model="passwordForm.password"
                                 class="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-cyan-500">
+                            <p v-if="passwordForm.errors.password" class="text-red-400 text-sm mt-2">
+                                {{ passwordForm.errors.password }}
+                            </p>
 
                         </div>
 
@@ -84,10 +137,12 @@ const passwordForm = reactive({
                                 Confirm Password
                             </label>
 
-                            <input
-                                type="password" placeholder="Confirm your new password"
+                            <input type="password" placeholder="Confirm your new password"
                                 v-model="passwordForm.password_confirmation"
                                 class="w-full rounded-xl bg-slate-950 border border-slate-700 px-4 py-3 text-white outline-none focus:ring-2 focus:ring-cyan-500">
+                            <p v-if="passwordForm.errors.password_confirmation" class="text-red-400 text-sm mt-2">
+                                {{ passwordForm.errors.password_confirmation }}
+                            </p>
 
                         </div>
 
@@ -95,12 +150,9 @@ const passwordForm = reactive({
 
                     <div class="flex justify-end">
 
-                        <button
-                            type="submit"
+                        <button type="submit" :disabled="passwordForm.processing"
                             class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 font-semibold text-slate-950">
-
                             Update Password
-
                         </button>
 
                     </div>
@@ -129,28 +181,20 @@ const passwordForm = reactive({
 
                     <div class="flex items-center gap-3">
 
-                        <span
+                        <span v-if="user.status === 1"
                             class="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold">
-
                             Verified
-
                         </span>
 
-                        <!--
-                        <span
+                        <span v-else="user.status === 0"
                             class="px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 font-semibold">
-
                             Not Verified
-
                         </span>
-                        -->
 
-                        <button
+                        <Link href="/send-otp"
                             class="px-5 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white hover:bg-slate-700">
-
-                            Resend Verification
-
-                        </button>
+                            Send Verification
+                        </Link>
 
                     </div>
 
@@ -176,11 +220,9 @@ const passwordForm = reactive({
 
                     </div>
 
-                    <button
+                    <button @click="logoutOtherDevices"
                         class="px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-400 text-slate-950 font-semibold">
-
                         Logout Other Devices
-
                     </button>
 
                 </div>
@@ -209,11 +251,9 @@ const passwordForm = reactive({
 
                     </div>
 
-                    <button
+                    <button @click="deleteAccount"
                         class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold">
-
                         Delete My Account
-
                     </button>
 
                 </div>

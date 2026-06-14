@@ -165,13 +165,13 @@ const formatDate = (date) => {
                                     <span v-if="transaction.type === 'income'"
                                         class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
 
-                                        + ${{ formatAmount(transaction.amount) }}
+                                        + {{ transaction?.currency || '$' }}{{ formatAmount(transaction.amount) }}
 
                                     </span>
 
                                     <span v-else class="font-bold text-rose-400">
 
-                                        - ${{ formatAmount(transaction.amount) }}
+                                        - {{ transaction?.currency || '$' }}{{ formatAmount(transaction.amount) }}
 
                                     </span>
 

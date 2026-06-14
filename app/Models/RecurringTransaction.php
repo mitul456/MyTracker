@@ -34,4 +34,11 @@ class RecurringTransaction extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    protected $appends = ['currency'];
+
+    public function getCurrencyAttribute()
+    {
+        return $this->user?->profile?->currency;
+    }
 }

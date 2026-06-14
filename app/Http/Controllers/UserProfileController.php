@@ -23,7 +23,7 @@ class UserProfileController extends Controller
         if (!$profile) {
             $profile = UserProfile::create([
                 'user_id' => $user->id,
-                'currency' => 'BDT',
+                'currency' => '$',
             ]);
         }
 

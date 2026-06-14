@@ -41,10 +41,8 @@ const destroy = (item) => {
                     </p>
                 </div>
 
-                <Link
-                    href="/recurring-transactions/create"
-                    class="px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition"
-                >
+                <Link href="/recurring-transactions/create"
+                    class="px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition">
                     + Add Recurring Transaction
                 </Link>
 
@@ -162,11 +160,8 @@ const destroy = (item) => {
 
                         <tbody>
 
-                            <tr
-                                v-for="item in recurringTransactions"
-                                :key="item.id"
-                                class="border-b border-slate-800 hover:bg-slate-800/50"
-                            >
+                            <tr v-for="item in recurringTransactions" :key="item.id"
+                                class="border-b border-slate-800 hover:bg-slate-800/50">
 
                                 <td class="px-6 py-4 text-white">
                                     #{{ item.id }}
@@ -182,24 +177,20 @@ const destroy = (item) => {
 
                                 <td class="px-6 py-4">
 
-                                    <span
-                                        v-if="item.type === 'income'"
-                                        class="px-3 py-1 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                    >
+                                    <span v-if="item.type === 'income'"
+                                        class="px-3 py-1 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                                         Income
                                     </span>
 
-                                    <span
-                                        v-else
-                                        class="px-3 py-1 rounded-full text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20"
-                                    >
+                                    <span v-else
+                                        class="px-3 py-1 rounded-full text-xs bg-rose-500/10 text-rose-400 border border-rose-500/20">
                                         Expense
                                     </span>
 
                                 </td>
 
                                 <td class="px-6 py-4 font-bold text-white">
-                                    ৳{{ formatAmount(item.amount) }}
+                                    {{item?.currency || '$'}}{{ formatAmount(item.amount) }}
                                 </td>
 
                                 <td class="px-6 py-4 text-slate-300 capitalize">
@@ -214,23 +205,18 @@ const destroy = (item) => {
 
                                     <div class="flex gap-2">
 
-                                        <Link
-                                            :href="`/recurring-transactions/${item.id}`"
-                                            class="px-3 py-1 rounded-lg bg-indigo-500 text-white text-sm"
-                                        >
+                                        <Link :href="`/recurring-transactions/${item.id}`"
+                                            class="px-3 py-1 rounded-lg bg-indigo-500 text-white text-sm">
                                             View
                                         </Link>
 
-                                        <Link
-                                            :href="`/recurring-transactions/${item.id}/edit`"
-                                            class="px-3 py-1 rounded-lg bg-amber-500 text-white text-sm"
-                                        >
+                                        <Link :href="`/recurring-transactions/${item.id}/edit`"
+                                            class="px-3 py-1 rounded-lg bg-amber-500 text-white text-sm">
                                             Edit
                                         </Link>
 
                                         <button @click="destroy(item)"
-                                            class="px-3 py-1 rounded-lg bg-rose-500 text-white text-sm"
-                                        >
+                                            class="px-3 py-1 rounded-lg bg-rose-500 text-white text-sm">
                                             Delete
                                         </button>
 
@@ -242,10 +228,7 @@ const destroy = (item) => {
 
                             <tr v-if="recurringTransactions.length === 0">
 
-                                <td
-                                    colspan="8"
-                                    class="text-center py-16 text-slate-500"
-                                >
+                                <td colspan="8" class="text-center py-16 text-slate-500">
                                     No recurring transactions found.
                                 </td>
 
@@ -263,16 +246,10 @@ const destroy = (item) => {
 
             <div class="flex gap-2">
 
-                <Link
-                    v-for="link in recurringTransactions.links"
-                    :key="link.label"
-                    :href="link.url"
-                    v-html="link.label"
-                    class="px-4 py-2 rounded-xl border border-slate-800 text-slate-300"
-                    :class="{
+                <Link v-for="link in recurringTransactions.links" :key="link.label" :href="link.url" v-html="link.label"
+                    class="px-4 py-2 rounded-xl border border-slate-800 text-slate-300" :class="{
                         'bg-cyan-500 text-slate-950 font-bold': link.active
-                    }"
-                />
+                    }" />
 
             </div>
 

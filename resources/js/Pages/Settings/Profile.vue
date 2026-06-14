@@ -232,10 +232,27 @@ const openFilePicker = () => {
 
                                     <select v-model="form.currency"
                                         class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white">
-                                        <option value="BDT">BDT (৳)</option>
-                                        <option value="USD">USD ($)</option>
-                                        <option value="EUR">EUR (€)</option>
-                                        <option value="INR">INR (₹)</option>
+                                        <option value="৳">BDT (৳) - Bangladeshi Taka</option>
+                                        <option value="$">USD ($) - US Dollar</option>
+                                        <option value="€">EUR (€) - Euro</option>
+                                        <option value="₹">INR (₹) - Indian Rupee</option>
+
+                                        <option value="£">GBP (£) - British Pound</option>
+                                        <option value="¥">JPY (¥) - Japanese Yen</option>
+                                        <option value="₩">KRW (₩) - South Korean Won</option>
+                                        <option value="₽">RUB (₽) - Russian Ruble</option>
+                                        <option value="₺">TRY (₺) - Turkish Lira</option>
+                                        <option value="₨">PKR (₨) - Pakistani Rupee</option>
+                                        <option value="﷼">SAR (﷼) - Saudi Riyal</option>
+                                        <option value="د.إ">AED (د.إ) - UAE Dirham</option>
+                                        <option value="RM">MYR (RM) - Malaysian Ringgit</option>
+                                        <option value="S$">SGD (S$) - Singapore Dollar</option>
+                                        <option value="C$">CAD (C$) - Canadian Dollar</option>
+                                        <option value="A$">AUD (A$) - Australian Dollar</option>
+                                        <option value="CHF">CHF - Swiss Franc</option>
+                                        <option value="¥">CNY (¥) - Chinese Yuan</option>
+                                        <option value="฿">THB (฿) - Thai Baht</option>
+                                        <option value="₫">VND (₫) - Vietnamese Dong</option>
                                     </select>
 
                                 </div>

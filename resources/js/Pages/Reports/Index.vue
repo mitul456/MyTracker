@@ -26,6 +26,7 @@ const props = defineProps({
     incomeExpenseChart: Array,
     categoryBreakdown: Array,
     transactionTrend: Array,
+    currency: Array
 });
 
 const exportCsvUrl = computed(() => {
@@ -294,7 +295,7 @@ const formatAmount = (amount) => {
 
                     <h3 class="text-3xl font-black text-emerald-400 mt-3">
 
-                        ৳{{ formatAmount(totalIncome) }}
+                        {{currency}}{{ formatAmount(totalIncome) }}
 
                     </h3>
 
@@ -316,7 +317,7 @@ const formatAmount = (amount) => {
 
                     <h3 class="text-3xl font-black text-rose-400 mt-3">
 
-                        ৳{{ formatAmount(totalExpense) }}
+                        {{currency}}{{ formatAmount(totalExpense) }}
 
                     </h3>
 
@@ -338,7 +339,7 @@ const formatAmount = (amount) => {
 
                     <h3 class="text-3xl font-black text-cyan-400 mt-3">
 
-                        ৳{{ formatAmount(netBalance) }}
+                        {{currency || '$'}}{{ formatAmount(netBalance) }}
 
                     </h3>
 
@@ -613,13 +614,13 @@ const formatAmount = (amount) => {
 
                                     <span v-if="transaction.type === 'income'" class="font-bold text-emerald-400">
 
-                                        + ৳{{ formatAmount(transaction.amount) }}
+                                        + {{currency}}{{ formatAmount(transaction.amount) }}
 
                                     </span>
 
                                     <span v-else class="font-bold text-rose-400">
 
-                                        - ৳{{ formatAmount(transaction.amount) }}
+                                        - {{currency}}{{ formatAmount(transaction.amount) }}
 
                                     </span>
 

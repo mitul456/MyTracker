@@ -5,6 +5,7 @@ import { computed } from 'vue';
 
 const props = defineProps({
     budgets: Array,
+    currency: Array
 });
 
 const form = useForm({});
@@ -96,7 +97,7 @@ const totalBudget = computed(() => {
                 <h3
                     class="text-3xl font-bold text-cyan-400 mt-2">
 
-                    ${{ formatAmount(totalBudget) }}
+                    {{currency}}{{ formatAmount(totalBudget) }}
 
                 </h3>
 
@@ -189,7 +190,7 @@ const totalBudget = computed(() => {
                                     <span
                                         class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
 
-                                        ${{ formatAmount(budget.amount) }}
+                                        {{currency}}{{ formatAmount(budget.amount) }}
 
                                     </span>
 
