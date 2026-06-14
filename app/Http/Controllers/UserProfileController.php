@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -11,6 +12,10 @@ class UserProfileController extends Controller
 {
     public function index()
     {
+        
+
+    
+
         $user = auth()->user();
 
         $profile = $user->profile;

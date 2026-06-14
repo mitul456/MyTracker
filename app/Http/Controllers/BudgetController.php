@@ -35,7 +35,7 @@ class BudgetController extends Controller
     public function store(BudgetCreate $request)
     {
         $budget = $this->budgetService->create($request->all());
-        return redirect()->route('budgets.index', $budget->id);
+        return redirect()->route('budgets.index', $budget->id)->with('success', 'Budget created successfully.');
     }
 
     /**

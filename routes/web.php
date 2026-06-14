@@ -1,5 +1,7 @@
 <?php
 
+
+
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BudgetController;
@@ -17,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/login');
 });
+
+
 
 
 Route::middleware('guest')->group(function () {
@@ -49,7 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/print', [ReportController::class, 'print'])
         ->name('reports.print');
 
-    Route::get('/profiles', [UserProfileController::class, 'index'])
+    Route::get('/profile', [UserProfileController::class, 'index'])
         ->name('profiles.profile');
     Route::put('/profiles/update', [UserProfileController::class, 'update'])
         ->name('profile.update');

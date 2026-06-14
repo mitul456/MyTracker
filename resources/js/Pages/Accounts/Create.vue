@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { useForm, Link } from '@inertiajs/vue3';
+import { useForm, Link, usePage } from '@inertiajs/vue3';
 
 const form = useForm({
     user_id: '',
@@ -11,8 +11,9 @@ const form = useForm({
 const submit = () => {
     form.post('/accounts', {
         onSuccess: () => {
-            form.reset();
-        }
+            
+        },
+         
     });
 }
 
@@ -127,3 +128,7 @@ const submit = () => {
         </div>
     </AppLayout>
 </template>
+
+
+
+

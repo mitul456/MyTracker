@@ -15,7 +15,7 @@ const form = useForm({
 const updateAccount = () => {
     form.put(`/accounts/${props.account.id}`, {
         onSuccess: () => {
-            console.log('Updated Successfully');
+            
         }
     });
 }
