@@ -29,6 +29,6 @@ class RecurringTransactionReminderMail extends Mailable
     {
         return $this
             ->subject('Upcoming Recurring Transaction Reminder')
-            ->view('emails.recurring-reminder');
+            ->view('Mail.recurring-reminder');
     }
 }

@@ -18,11 +18,11 @@ class RecurringTransactionCompletedMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $transaction;
+    public $recurring;
 
-    public function __construct(Transaction $transaction)
+    public function __construct(Transaction $recurring)
     {
-        $this->transaction = $transaction;
+        $this->recurring = $recurring;
     }
 
     public function build()

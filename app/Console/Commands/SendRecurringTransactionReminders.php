@@ -21,7 +21,6 @@ class SendRecurringTransactionReminders extends Command
         )->get();
 
         foreach ($recurrings as $recurring) {
-
             Mail::to($recurring->user->email)
                 ->send(
                     new RecurringTransactionReminderMail(
