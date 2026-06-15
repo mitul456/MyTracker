@@ -79,7 +79,7 @@ class AccountController extends Controller
     public function destroy($id)
     {
         $this->accountService->delete($id);
-        return redirect()->route('accounts.index');
+        return redirect()->route('accounts.index')->with('success', 'Account deleted successfully.');
     }
 }
 

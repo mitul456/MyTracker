@@ -39,7 +39,7 @@ class TransferController extends Controller
         $data = $request->validated();
         
         $this->transferRepo->create($data);
-        return redirect()->route('transfers.index');
+        return redirect()->route('transfers.index')->with('success', 'Transfer created successfully.');
     }
 
     /**
@@ -68,7 +68,7 @@ class TransferController extends Controller
     {
         $data = $request->validated();
         $this->transferRepo->update($id, $data);
-        return redirect()->route('transfers.index');
+        return redirect()->route('transfers.index')->with('success', 'Transfer updated successfully.');
     }
 
     /**
@@ -77,6 +77,6 @@ class TransferController extends Controller
     public function destroy($id)
     {
         $this->transferRepo->delete($id);
-        return redirect()->route('transfers.index');
+        return redirect()->route('transfers.index')->with('success', 'Transfer deleted successfully.');
     }
 }

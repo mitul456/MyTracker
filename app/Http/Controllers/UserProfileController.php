@@ -11,11 +11,7 @@ use Inertia\Inertia;
 class UserProfileController extends Controller
 {
     public function index()
-    {
-        
-
-    
-
+    {         
         $user = auth()->user();
 
         $profile = $user->profile;
@@ -77,6 +73,6 @@ class UserProfileController extends Controller
             ]
         );
 
-        return back();
+        return back()->with('success', 'Profile updated successfully.');
     }
 }

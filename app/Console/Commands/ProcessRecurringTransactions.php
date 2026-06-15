@@ -47,7 +47,7 @@ class ProcessRecurringTransactions extends Command
                 'transaction_date' => today()
             ]);
 
-            $account = Account::where('user_id', $recurring->user_id)->first();
+            $account = Account::where('user_id', $recurring->user_id)->findOrFail($recurring->account_id);
 
             if($recurring->type == 'expense') {
                     $account->decrement('balance', $recurring->amount);

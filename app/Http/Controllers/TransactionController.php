@@ -39,7 +39,7 @@ class TransactionController extends Controller
     {
         $data = $request->validated();
         $this->transaction->create($data);
-        return redirect()->route('transactions.index');
+        return redirect()->route('transactions.index')->with('success', 'Transaction created successfully.');
     }
 
     /**
@@ -72,7 +72,7 @@ class TransactionController extends Controller
     {
         $data = $request->validated();
         $this->transaction->update($id, $data);
-        return redirect()->route('transactions.index');
+        return redirect()->route('transactions.index')->with('success', 'Transaction updated successfully.');
     }
 
     /**
@@ -81,6 +81,6 @@ class TransactionController extends Controller
     public function destroy($id)
     {
         $this->transaction->delete($id);
-        return redirect()->route('transactions.index');
+        return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully.');
     }
 }
