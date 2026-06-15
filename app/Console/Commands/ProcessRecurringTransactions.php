@@ -2,11 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\RecurringTransactionCompletedMail;
 use App\Models\Account;
 use App\Models\RecurringTransaction;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class ProcessRecurringTransactions extends Command
 {
@@ -47,18 +49,16 @@ class ProcessRecurringTransactions extends Command
                 'transaction_date' => today()
             ]);
 
-            $account = Account::where('user_id', $recurring->user_id)->findOrFail($recurring->account_id);
+            $account = Account::where('user_id', $recurring->user_id)
+                ->findOrFail($recurring->account_id);
 
-            if($recurring->type == 'expense') {
-                    $account->decrement('balance', $recurring->amount);
+            if ($recurring->type == 'expense') {
+                $account->decrement('balance', $recurring->amount);
             } else {
                 $account->increment('balance', $recurring->amount);
             }
 
-            // Update next_run_date based on frequency
-            $nextDate = Carbon::parse(
-                $recurring->next_run_date
-            );
+            $nextDate = Carbon::parse($recurring->next_run_date);
 
             switch ($recurring->frequency) {
                 case 'daily':
@@ -78,6 +78,11 @@ class ProcessRecurringTransactions extends Command
             $recurring->update([
                 'next_run_date' => $nextDate
             ]);
+
+            Mail::to($recurring->user->email)
+                ->send(
+                    new RecurringTransactionCompletedMail($recurring)
+                );
         }
 
         $this->info('Recurring transactions processed.');

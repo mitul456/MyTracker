@@ -13,9 +13,9 @@
     <p>Your recurring transaction has been processed successfully.</p>
 
     <ul>
-        <li>Amount: {{ $transaction->amount }}</li>
-        <li>Type: {{ ucfirst($transaction->type) }}</li>
-        <li>Date: {{ $transaction->transaction_date }}</li>
+        <li>Amount: {{ $recurring->amount }}</li>
+        <li>Type: {{ ucfirst($recurring->type) }}</li>
+        <li>Date: {{ $recurring->transaction_date }}</li>
     </ul>
 
     <p>Thank you.</p>
