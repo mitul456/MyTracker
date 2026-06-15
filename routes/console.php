@@ -9,7 +9,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('app:send-reminders')
-    ->daily();
+    ->everyMinute();
 
 Schedule::command(
     'app:process'

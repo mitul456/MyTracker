@@ -31,7 +31,7 @@ class ProcessRecurringTransactions extends Command
      */
     public function handle()
     {
-        $recurrings = RecurringTransaction::whereDate(
+        $recurrings = RecurringTransaction::with('user')->whereDate(
             'next_run_date',
             '<=',
             today()
@@ -39,7 +39,7 @@ class ProcessRecurringTransactions extends Command
 
         foreach ($recurrings as $recurring) {
 
-            Transaction::create([
+            $transaction = Transaction::create([
                 'user_id' => $recurring->user_id,
                 'account_id' => $recurring->account_id,
                 'category_id' => $recurring->category_id,
@@ -79,10 +79,9 @@ class ProcessRecurringTransactions extends Command
                 'next_run_date' => $nextDate
             ]);
 
-            Mail::to($recurring->user->email)
-                ->send(
-                    new RecurringTransactionCompletedMail($recurring)
-                );
+            Mail::to($recurring->user->email)->send(
+                new RecurringTransactionCompletedMail($transaction)
+            );
         }
 
         $this->info('Recurring transactions processed.');

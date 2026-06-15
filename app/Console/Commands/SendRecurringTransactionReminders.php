@@ -9,25 +9,33 @@ use Illuminate\Support\Facades\Mail;
 
 class SendRecurringTransactionReminders extends Command
 {
-     protected $signature = 'app:send-reminders';
+    protected $signature = 'app:send-reminders';
 
     protected $description = 'Send reminder emails 3 days before recurring transaction';
 
+
     public function handle()
     {
-        $recurrings = RecurringTransaction::whereDate(
-            'next_run_date',
-            now()->addDays(3)->toDateString()
-        )->get();
+        RecurringTransaction::with('user')
+            ->whereBetween('next_run_date', [
+                now()->addDays(3)->startOfDay(),
+                now()->addDays(3)->endOfDay(),
+            ])
+            ->chunk(100, function ($recurrings) {
 
-        foreach ($recurrings as $recurring) {
-            Mail::to($recurring->user->email)
-                ->send(
-                    new RecurringTransactionReminderMail(
-                        $recurring
-                    )
-                );
-        }
+                $recurrings->groupBy('user_id')->each(function ($items) {
+                    $user = $items->first()->user;
+
+                    if (!$user?->email)
+                        return;
+
+                    foreach ($items as $recurring) {
+                        Mail::to($user->email)->queue(
+                            new RecurringTransactionReminderMail($recurring)
+                        );
+                    }
+                });
+            });
 
         $this->info('Reminder emails sent.');
     }
