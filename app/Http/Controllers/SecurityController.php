@@ -42,8 +42,8 @@ class SecurityController extends Controller
         ]);
 
         if (!Hash::check($request->password, auth()->user()->password)) {
-            return back()->withErrors([
-                'password' => 'The password is incorrect.',
+            return back()->with([
+                'error' => 'The password is incorrect.',
             ]);
         }
 
@@ -67,7 +67,7 @@ class SecurityController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Account deleted successfully.');
     }
 
 }

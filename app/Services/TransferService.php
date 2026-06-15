@@ -90,7 +90,7 @@ class TransferService
     {
         return DB::transaction(function () use ($id) {
 
-            $transfer = Account::findOrFail($id);
+            $transfer = $this->repository->find($id);
 
             $fromAccount = Account::findOrFail(
                 $transfer->from_account_id

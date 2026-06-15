@@ -46,7 +46,23 @@ class TransactionService
 
     public function update($id, array $data)
     {
-        return $this->repository->update($id, $data);
+        DB::transaction(function () use ($id, $data) {
+            $transaction = $this->repository->find($id);
+            $account = Account::findOrFail($transaction->account_id);
+
+            $oldTrx = $transaction->amount;
+            $newTrx = $data['amount'];
+
+            if ($transaction->type == 'expense') {
+                $account->increment('balance', $oldTrx);
+                $account->decrement('balance', $newTrx);
+            } else {
+                $account->decrement('balance', $oldTrx);
+                $account->increment('balance', $newTrx);
+            }
+
+            return $this->repository->update($id, $data);
+        });
     }
 
     public function delete($id)
@@ -77,3 +93,6 @@ class TransactionService
         return $this->repository->getCategories();
     }
 }
+
+
+

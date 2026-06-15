@@ -33,8 +33,8 @@ class TransferRepository implements TransferRepositoryInterface
     public function delete($id)
     {
         $transfer = $this->find($id);
-        $transfer->delete();
-        return true;
+        return $transfer->delete();
+        
     }
 
     public function accounts()

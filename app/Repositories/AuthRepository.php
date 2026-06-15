@@ -37,8 +37,7 @@ class AuthRepository implements AuthRepositoryInterface
 
     public function logout():void
     {
-        Auth::logout();
-        
+        Auth::logout();        
     }   
 }
         

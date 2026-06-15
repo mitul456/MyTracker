@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BudgetCreate;
-use App\Models\Transaction;
 use App\Models\UserProfile;
 use App\Services\BudgetService;
 use Inertia\Inertia;
@@ -70,7 +69,7 @@ class BudgetController extends Controller
     {
         $budget = $this->budgetService->find($id);
         $this->budgetService->update($id, $request->all());
-        return redirect()->route('budgets.index', $budget->id);
+        return redirect()->route('budgets.index', $budget->id)->with('success', 'Budget updated successfully.');
     }
 
     /**
@@ -80,6 +79,6 @@ class BudgetController extends Controller
     {
         $budget = $this->budgetService->find($id);
         $this->budgetService->delete($id);
-        return redirect()->route('budgets.index');
+        return redirect()->route('budgets.index')->with('success', 'Budget deleted successfully.');
     }
 }
