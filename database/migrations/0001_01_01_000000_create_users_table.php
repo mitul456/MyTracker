@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string(('phone'))->nullable();
             $table->string('otp')->nullable()->default(null);
             $table->boolean('status')->default(0);
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });
